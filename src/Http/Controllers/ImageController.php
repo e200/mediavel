@@ -2,11 +2,21 @@
 
 namespace e200\Mediavel\Http\Controllers;
 
+use Illuminate\Http\Request;
+use e200\Mediavel\ImageHandler;
 use Illuminate\Routing\Controller;
-use e200\Mediavel\Models\MimeType;
-use e200\Mediavel\Http\Requests\ImageRequest;
 
 class ImageController extends Controller
 {
-    // :/
+    protected $imageHandler;
+
+    public function __construct(ImageHandler $imageHandler)
+    {
+        $this->imageHandler = $imageHandler;
+    }
+
+    public function resolve(Request $request)
+    {
+        return $this->imageHandler->handle($request);
+    }
 }
