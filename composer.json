@@ -1,7 +1,8 @@
 {
     "name": "e200/Mediavel",
-    "description": ":description",
-    "license": "No license",
+    "version": "0.1",
+    "description": "Laravel media library package",
+    "license": "MIT",
     "authors": [
         {
             "name": "Eleandro Duzentos",
@@ -9,7 +10,7 @@
             "homepage": "https://e200.github.io"
         }
     ],
-    "homepage": "https://bitbucket.com/e200/Mediavel",
+    "homepage": "https://github.com/e200/Mediavel",
     "keywords": ["Laravel", "Mediavel"],
     "require": {
         "illuminate/support": "~5",
@@ -20,8 +21,7 @@
         "mockery/mockery": "^1.1",
         "orchestra/testbench": "~3.0",
         "sempro/phpunit-pretty-print": "^1.0",
-        "mikey179/vfsStream": "^1.6",
-        "guzzlehttp/guzzle": "^6.3"
+        "mikey179/vfsStream": "^1.6"
     },
     "autoload": {
         "psr-4": {
