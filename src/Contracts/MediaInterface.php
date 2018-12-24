@@ -4,8 +4,11 @@ namespace e200\Mediavel\Contracts;
 
 interface MediaInterface
 {
-    public function backup() : MediaInterface;
-    public function optimize() : MediaInterface;
-    public function resize($width, $heigth = null) : MediaInterface;
-    public function toCollection($name) : MediaInterface;
+    public function backup() : self;
+
+    public function optimize() : self;
+
+    public function resize($width, $heigth = null) : self;
+
+    public function toCollection($name) : self;
 }

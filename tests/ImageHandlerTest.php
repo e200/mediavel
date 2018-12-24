@@ -2,7 +2,6 @@
 
 namespace e200\Mediavel\Tests;
 
-use Mockery;
 use Illuminate\Http\Request;
 use e200\Mediavel\ImageHandler;
 use Illuminate\Http\UploadedFile;
@@ -37,7 +36,7 @@ class ImageHandlerTest extends TestCase
 
         $this->assertJson($content);
 
-        $jsonArray = (array)json_decode($content);
+        $jsonArray = (array) json_decode($content);
 
         $this->assertArrayHasKey('reason', $jsonArray);
         $this->assertArrayHasKey('statusCode', $jsonArray);

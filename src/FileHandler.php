@@ -9,7 +9,7 @@ class FileHandler
     public function handle(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:pdf,doc,dox'
+            'file' => 'required|mimes:pdf,doc,dox',
         ]);
     }
 }

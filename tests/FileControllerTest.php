@@ -12,7 +12,7 @@ class FileControllerTest extends TestCase
 {
     public function testResolve()
     {
-        $fileRequest     = Mockery::mock(Request::class);
+        $fileRequest = Mockery::mock(Request::class);
         $fileHandlerMock = Mockery::mock(FileHandler::class);
 
         $fileHandlerMock
