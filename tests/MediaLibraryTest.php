@@ -6,24 +6,33 @@ use Mockery;
 use e200\Mediavel\MediaLibrary;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
+use e200\Mediavel\Models\MimeType;
+use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediaLibraryTest extends TestCase
 {
     public function testAdd()
     {
-        $MediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
-
+        $mediaMock        = Mockery::mock(MediaInterface::class);
+        $mediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
         $uploadedFileMock = Mockery::mock(UploadedFile::class);
 
-        $MediaFactoryMock
-            ->allows()
-            ->make($uploadedFileMock)
-            ->andReturns(true);
+        $mediaMock
+            ->shouldReceive('store')
+            ->with(
+                Mockery::any(),
+                Mockery::any()
+            );
 
-        $mediaLibrary = new MediaLibrary($MediaFactoryMock);
+        $mediaFactoryMock
+            ->shouldReceive('make')
+            ->andReturns($mediaMock);
 
-        $this->assertTrue($mediaLibrary->add($uploadedFileMock));
+        $mediaLibrary = new MediaLibrary($mediaFactoryMock);
+
+        $this->assertInstanceOf(MediaInterface::class, $mediaMock);
+        $this->assertSame($mediaMock, $mediaLibrary->add($uploadedFileMock));
     }
 
     protected function tearDown()
