@@ -7,6 +7,7 @@ use e200\Mediavel\Mediavel;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Contracts\MediaInterface;
+use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
@@ -85,6 +86,8 @@ class MediavelServiceProvider extends ServiceProvider
         ], 'mediavel.views');*/
 
         // Registering package commands.
-        // $this->commands([]);
+        $this->commands([
+            MediavelCommand::class
+        ]);
     }
 }
