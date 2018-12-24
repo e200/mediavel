@@ -7,5 +7,5 @@ use e200\Mediavel\Contracts\MediaInterface;
 
 interface MediaFactoryInterface
 {
-    public function make(UploadedFile $file);
+    public function make();
 }
