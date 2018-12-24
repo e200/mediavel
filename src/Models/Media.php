@@ -8,6 +8,6 @@ class Media extends Model
 {
     protected $fillable = [
         'client_name',
-        'file_name'
+        'file_name',
     ];
 }

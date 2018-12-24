@@ -12,7 +12,7 @@ class ImageHandler
         try {
             $request->validate(
                 [
-                    'image' => 'bail|required|mimes:jpeg,jpg,png,gif,svg|max:5012'
+                    'image' => 'bail|required|mimes:jpeg,jpg,png,gif,svg|max:5012',
                 ],
                 [
                     'image.required' => 'Image must be provided',

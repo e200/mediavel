@@ -4,7 +4,6 @@ namespace e200\Mediavel;
 
 use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Contracts\MediaLibraryInterface;
-use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediaLibrary implements MediaLibraryInterface

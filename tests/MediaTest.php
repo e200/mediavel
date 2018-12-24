@@ -4,8 +4,8 @@ namespace e200\Mediavel\Tests;
 
 use Mockery;
 use e200\Mediavel\Media;
-use e200\Mediavel\Models\Media as MediaModel;
 use Orchestra\Testbench\TestCase;
+use e200\Mediavel\Models\Media as MediaModel;
 
 class MediaTest extends TestCase
 {

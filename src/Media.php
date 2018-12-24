@@ -2,8 +2,8 @@
 
 namespace e200\Mediavel;
 
-use e200\Mediavel\Models\Media as MediaModel;
 use e200\Mediavel\Contracts\MediaInterface;
+use e200\Mediavel\Models\Media as MediaModel;
 
 class Media implements MediaInterface
 {
