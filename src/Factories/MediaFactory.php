@@ -9,7 +9,7 @@ use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediaFactory implements MediaFactoryInterface
 {
-    public function make(UploadedFile $file)
+    public function make()
     {
         return app(MediaInterface::class);
     }
