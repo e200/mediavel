@@ -23,7 +23,7 @@ class MediaFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             MediaInterface::class,
-            $MediaFactory->make(Mockery::mock(UploadedFile::class))
+            $MediaFactory->make()
         );
     }
 
