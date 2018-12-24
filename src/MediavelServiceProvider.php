@@ -2,10 +2,12 @@
 
 namespace e200\Mediavel;
 
-use e200\Mediavel\Models\Media;
+use e200\Mediavel\Media;
+use e200\Mediavel\Mediavel;
 use Illuminate\Support\ServiceProvider;
-use e200\Mediavel\Factories\MediaResolverFactory;
-use e200\Mediavel\Contracts\Factories\MediaResolverFactoryInterface;
+use e200\Mediavel\Factories\MediaFactory;
+use e200\Mediavel\Contracts\MediaInterface;
+use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
 {
@@ -37,11 +39,12 @@ class MediavelServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/mediavel.php', 'mediavel');
 
         // Register the service the package provides.
-        $this->app->singleton('media', function ($app) {
-            return new Media;
+        $this->app->singleton('mediavel', function ($app) {
+            return new Mediavel;
         });
 
-        $this->app->bind(MediaResolverFactoryInterface::class, MediaResolverFactory::class);
+        $this->app->bind(MediaInterface::class, Media::class);
+        $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
     }
 
     /**
