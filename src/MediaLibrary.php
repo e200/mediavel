@@ -3,20 +3,21 @@
 namespace e200\Mediavel;
 
 use Illuminate\Http\UploadedFile;
+use e200\Mediavel\Contracts\MediaLibraryInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediaLibrary implements MediaLibraryInterface
 {
-    protected $MediaFactory;
+    protected $mediaFactory;
 
-    public function __construct(MediaFactoryInterface $MediaFactory)
+    public function __construct(MediaFactoryInterface $mediaFactory)
     {
-        $this->MediaFactory = $MediaFactory;
+        $this->mediaFactory = $mediaFactory;
     }
 
     public function add(UploadedFile $file)
     {
-        $media = $this->MediaFactory->make();
+        $media = $this->mediaFactory->make();
 
         app()->call([$media, 'store'], ['file' => $file]);
 
