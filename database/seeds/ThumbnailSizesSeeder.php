@@ -23,17 +23,17 @@ class ThumbnailSizesSeeder extends Seeder
             [
                 'key'    => 'small',
                 'width'  => 150,
-                'heigth' => 150
+                'heigth' => 150,
             ],
             [
                 'key'    => 'medium',
                 'width'  => 300,
-                'heigth' => 300
+                'heigth' => 300,
             ],
             [
                 'key'    => 'large',
                 'width'  => 1024,
-                'heigth' => null
+                'heigth' => null,
             ],
         ];
     }
