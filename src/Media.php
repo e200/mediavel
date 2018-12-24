@@ -18,9 +18,9 @@ class Media implements MediaInterface
 
     public function store(UploadedFile $file, MimeType $mimeType)
     {
-        $FileName       = $file->hashName();
+        $FileName = $file->hashName();
         $fileClientName = $file->getClientOriginalName();
-        $fileMimeType   = $file->getMimeType();
+        $fileMimeType = $file->getMimeType();
 
         $mimeType = $mimeType->firstOrCreate(['value' => $fileMimeType]);
 

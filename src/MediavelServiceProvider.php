@@ -4,8 +4,8 @@ namespace e200\Mediavel;
 
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
-use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Commands\MediavelCommand;
+use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
@@ -85,7 +85,7 @@ class MediavelServiceProvider extends ServiceProvider
 
         // Registering package commands.
         $this->commands([
-            MediavelCommand::class
+            MediavelCommand::class,
         ]);
     }
 }

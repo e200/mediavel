@@ -7,7 +7,6 @@ use e200\Mediavel\Media;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Models\MimeType;
-use e200\Mediavel\MediavelServiceProvider;
 use e200\Mediavel\Models\Media as MediaModel;
 
 class MediaTest extends TestCase

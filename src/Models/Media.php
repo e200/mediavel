@@ -2,7 +2,6 @@
 
 namespace e200\Mediavel\Models;
 
-use e200\Mediavel\Models\MimeType;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
@@ -12,7 +11,7 @@ class Media extends Model
     protected $fillable = [
         'client_name',
         'file_name',
-        'mime_type_id'
+        'mime_type_id',
     ];
 
     public function mimeType()

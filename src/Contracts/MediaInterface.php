@@ -8,8 +8,12 @@ use e200\Mediavel\Models\MimeType;
 interface MediaInterface
 {
     public function store(UploadedFile $file, MimeType $mimeType);
+
     public function backup();
+
     public function optimize();
+
     public function resize($width, $heigth = null);
+
     public function toCollection($name);
 }

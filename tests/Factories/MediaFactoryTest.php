@@ -3,13 +3,12 @@
 namespace e200\Mediavel\Tests\Factories;
 
 use Mockery;
-use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\MediavelServiceProvider;
 use e200\Mediavel\Contracts\MediaInterface;
 
-class MediaResolverFactoryTest extends TestCase
+class MediaFactoryTest extends TestCase
 {
     /**
      * Test if controller calls
