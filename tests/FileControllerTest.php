@@ -32,4 +32,9 @@ class FileControllerTest extends TestCase
 
         $this->assertTrue($response);
     }
+
+    protected function tearDown()
+    {
+        Mockery::close();
+    }
 }
