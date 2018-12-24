@@ -10,12 +10,6 @@ use e200\Mediavel\Http\Controllers\FileController;
 
 class FileControllerTest extends TestCase
 {
-    /**
-     * Test if controller calls
-     * the method `resolve`
-     *
-     * @return void
-     */
     public function testResolve()
     {
         $fileRequest     = Mockery::mock(Request::class);

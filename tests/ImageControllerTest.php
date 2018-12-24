@@ -10,12 +10,6 @@ use e200\Mediavel\ImageHandler;
 
 class ImageControllerTest extends TestCase
 {
-    /**
-     * Test if controller calls
-     * the method `resolve`
-     *
-     * @return void
-     */
     public function testResolve()
     {
         $imageRequest     = Mockery::mock(Request::class);
