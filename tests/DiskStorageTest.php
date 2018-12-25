@@ -19,7 +19,7 @@ class DiskStorageTest extends TestCase
         $diskStorage = $this->getInstance();
 
         $storageName = 'storage';
-        $storagePath = DIRECTORY_SEPARATOR . $storageName;
+        $storagePath = DIRECTORY_SEPARATOR.$storageName;
         $currentYear = date('Y');
         $currentMonth = date('m');
 

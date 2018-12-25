@@ -3,7 +3,6 @@
 namespace e200\Mediavel;
 
 use Illuminate\Http\UploadedFile;
-use e200\Mediavel\Models\FileMeta;
 use e200\Mediavel\Contracts\StorageInterface;
 
 class DiskStorage implements StorageInterface
@@ -19,10 +18,10 @@ class DiskStorage implements StorageInterface
 
     public function resolveStorageDir($storagePath)
     {
-        $storageDirPath =  $this->getStorageDirPath($storagePath);
+        $storageDirPath = $this->getStorageDirPath($storagePath);
 
-        if (!is_dir($storageDirPath)) {
-            if (!mkdir($storageDirPath, 755, true)) {
+        if (! is_dir($storageDirPath)) {
+            if (! mkdir($storageDirPath, 755, true)) {
                 return false;
             }
         }
@@ -41,7 +40,7 @@ class DiskStorage implements StorageInterface
                 $storagePath,
                 $currentYear,
                 $currentMonth,
-                time()
+                time(),
             ]
         );
     }

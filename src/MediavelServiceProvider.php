@@ -2,9 +2,6 @@
 
 namespace e200\Mediavel;
 
-use e200\Mediavel\Media;
-use e200\Mediavel\Mediavel;
-use e200\Mediavel\DiskStorage;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Commands\MediavelCommand;
