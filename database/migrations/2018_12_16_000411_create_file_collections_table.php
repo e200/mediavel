@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateThumbnailSizesTable extends Migration
+class CreateFileCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateThumbnailSizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('thumbnail_sizes', function (Blueprint $table) {
+        Schema::create('file_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
-            $table->integer('width');
-            $table->integer('heigth')->nullable();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateThumbnailSizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thumbnail_sizes');
+        Schema::dropIfExists('file_collections');
     }
 }
