@@ -3,9 +3,7 @@
 namespace e200\Mediavel;
 
 use Illuminate\Http\UploadedFile;
-use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Contracts\MediaInterface;
-use e200\Mediavel\Models\Media as MediaModel;
 use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
 
 class Media implements MediaInterface
@@ -22,7 +20,7 @@ class Media implements MediaInterface
         if ($uploadedFile->isValid()) {
             $storagePath = $storageFolder->getPath();
 
-            $uploadedFile->store($storagePath . DIRECTORY_SEPARATOR . 'images');
+            $uploadedFile->store($storagePath.DIRECTORY_SEPARATOR.'images');
 
             $media = $this->mediaModelFactory->makeFrom($uploadedFile);
         }

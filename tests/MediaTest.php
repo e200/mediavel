@@ -6,8 +6,6 @@ use Mockery;
 use e200\Mediavel\Media;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
-use e200\Mediavel\Models\MimeType;
-use e200\Mediavel\Models\Media as MediaModel;
 use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
 
 class MediaTest extends TestCase
