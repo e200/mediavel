@@ -2,8 +2,8 @@
 
 namespace e200\Mediavel\Factories;
 
-use e200\Mediavel\Models\FileMeta;
 use Illuminate\Http\UploadedFile;
+use e200\Mediavel\Models\FileMeta;
 use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Contracts\Factories\FileMetaFactoryInterface;
 
