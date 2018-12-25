@@ -18,11 +18,11 @@ class MediaFactoryTest extends TestCase
      */
     public function testMake()
     {
-        $MediaFactory = new MediaFactory();
+        $mediaFactory = new MediaFactory();
 
         $this->assertInstanceOf(
             MediaInterface::class,
-            $MediaFactory->make()
+            $mediaFactory->make()
         );
     }
 

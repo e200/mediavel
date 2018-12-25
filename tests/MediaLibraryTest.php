@@ -19,10 +19,7 @@ class MediaLibraryTest extends TestCase
 
         $mediaMock
             ->shouldReceive('store')
-            ->with(
-                Mockery::any(),
-                Mockery::any()
-            );
+            ->with(Mockery::any());
 
         $mediaFactoryMock
             ->shouldReceive('make')

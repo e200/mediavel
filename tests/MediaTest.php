@@ -8,33 +8,23 @@ use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Models\Media as MediaModel;
+use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
 
 class MediaTest extends TestCase
 {
     public function testStore()
     {
-        $mimeType = Mockery::mock(MimeType::class)
-            ->shouldIgnoreMissing();
+        $mediaModelFactoryMock = Mockery::mock(MediaModelFactoryInterface::class);
 
-        $mimeType
-            ->shouldReceive('firstOrCreate')
-            ->with(Mockery::any())
-            ->andReturns($mimeType);
+        $mediaModelFactoryMock
+            ->shouldReceive('makeFrom')
+            ->with(Mockery::any());
 
-        $mimeType->id = 1;
+        $media = $this->getInstance($mediaModelFactoryMock);
 
-        $mediaModel = Mockery::mock(MediaModel::class);
+        $uploadedFile = UploadedFile::fake()->image('avatar.jpg');
 
-        $mediaModel
-            ->shouldReceive('create')
-            ->with(Mockery::any())
-            ->andReturns($mediaModel);
-
-        $media = $this->getInstance($mediaModel);
-
-        $file = UploadedFile::fake()->image('avatar.jpg');
-
-        $this->assertEquals($media, $media->store($file, $mimeType));
+        $this->assertEquals($media, $media->store($uploadedFile));
     }
 
     public function testBackup()
@@ -65,13 +55,13 @@ class MediaTest extends TestCase
         $this->assertEquals($media, $media->toCollection('name'));
     }
 
-    protected function getInstance($mediaMock = null)
+    protected function getInstance($mediaModelFactoryMock = null)
     {
-        if (is_null($mediaMock)) {
-            $mediaMock = Mockery::mock(MediaModel::class);
+        if (is_null($mediaModelFactoryMock)) {
+            $mediaModelFactoryMock = Mockery::mock(MediaModelFactoryInterface::class);
         }
 
-        return new Media($mediaMock);
+        return new Media($mediaModelFactoryMock);
     }
 
     protected function tearDown()
