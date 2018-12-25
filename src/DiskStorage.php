@@ -9,27 +9,12 @@ class DiskStorage implements StorageInterface
 {
     public function store(UploadedFile $uploadedFile)
     {
-        $storagePath = config('mediavel.storage.path');
+        $storagePath = $this->makeStorageRelativePath();
 
-        $storageDirPath = $this->resolveStorageDir($storagePath);
-
-        return $uploadedFile->store($storageDirPath);
+        return $uploadedFile->store($storagePath);
     }
 
-    public function resolveStorageDir($storagePath)
-    {
-        $storageDirPath = $this->getStorageDirPath($storagePath);
-
-        if (! is_dir($storageDirPath)) {
-            if (! mkdir($storageDirPath, 755, true)) {
-                return false;
-            }
-        }
-
-        return $storageDirPath;
-    }
-
-    public function getStorageDirPath($storagePath)
+    public function makeStorageRelativePath()
     {
         $currentYear = date('Y');
         $currentMonth = date('m');
@@ -37,7 +22,6 @@ class DiskStorage implements StorageInterface
         return implode(
             DIRECTORY_SEPARATOR,
             [
-                $storagePath,
                 $currentYear,
                 $currentMonth,
                 time(),
