@@ -7,7 +7,6 @@ use org\bovigo\vfs\vfsStream;
 use e200\Mediavel\DiskStorage;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
-use e200\Mediavel\Models\FileMeta;
 use Illuminate\Support\Facades\Storage;
 
 class DiskStorageTest extends TestCase
