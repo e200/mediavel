@@ -4,31 +4,33 @@ namespace e200\Mediavel;
 
 use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Contracts\MediaInterface;
-use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
+use e200\Mediavel\Contracts\StorageInterface;
+use e200\Mediavel\Contracts\Factories\FileMetaFactoryInterface;
 
 class Media implements MediaInterface
 {
-    protected $mediaModelFactory;
+    protected $fileMeta;
+    protected $fileMetaFactory;
+    protected $storage;
 
-    public function __construct(MediaModelFactoryInterface $mediaModelFactory)
-    {
-        $this->mediaModelFactory = $mediaModelFactory;
+    public function __construct(
+        FileMetaFactoryInterface $fileMetaFactory,
+        StorageInterface $storage
+    ) {
+        $this->fileMetaFactory = $fileMetaFactory;
+        $this->storage = $storage;
     }
 
     public function store(UploadedFile $uploadedFile)
     {
-        if ($uploadedFile->isValid()) {
-            $storagePath = $storageFolder->getPath();
+        $this->fileMeta = $this->fileMetaFactory->makeFrom($uploadedFile);
 
-            $uploadedFile->store($storagePath.DIRECTORY_SEPARATOR.'images');
-
-            $media = $this->mediaModelFactory->makeFrom($uploadedFile);
-        }
+        $this->storage->store($uploadedFile, $this->fileMeta);
 
         return $this;
     }
 
-    public function backup()
+    public function backupOriginal($path)
     {
         return $this;
     }
@@ -48,8 +50,8 @@ class Media implements MediaInterface
         return $this;
     }
 
-    public function getThumbnails()
+    public function get()
     {
-        return [];
+        return $this->file;
     }
 }

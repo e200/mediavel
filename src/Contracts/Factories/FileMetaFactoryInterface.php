@@ -4,7 +4,7 @@ namespace e200\Mediavel\Contracts\Factories;
 
 use Illuminate\Http\UploadedFile;
 
-interface MediaModelFactoryInterface
+interface FileMetaFactoryInterface
 {
     public function makeFrom(UploadedFile $uploadedFile);
 }

@@ -8,7 +8,7 @@ interface MediaInterface
 {
     public function store(UploadedFile $file);
 
-    public function backup();
+    public function backupOriginal($path);
 
     public function optimize();
 
