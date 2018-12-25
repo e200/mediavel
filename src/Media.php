@@ -6,29 +6,26 @@ use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Models\Media as MediaModel;
+use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
 
 class Media implements MediaInterface
 {
-    protected $mediaModel;
+    protected $mediaModelFactory;
 
-    public function __construct(MediaModel $mediaModel)
+    public function __construct(MediaModelFactoryInterface $mediaModelFactory)
     {
-        $this->mediaModel = $mediaModel;
+        $this->mediaModelFactory = $mediaModelFactory;
     }
 
-    public function store(UploadedFile $file, MimeType $mimeType)
+    public function store(UploadedFile $uploadedFile)
     {
-        $FileName = $file->hashName();
-        $fileClientName = $file->getClientOriginalName();
-        $fileMimeType = $file->getMimeType();
+        if ($uploadedFile->isValid()) {
+            $storagePath = $storageFolder->getPath();
 
-        $mimeType = $mimeType->firstOrCreate(['value' => $fileMimeType]);
+            $uploadedFile->store($storagePath . DIRECTORY_SEPARATOR . 'images');
 
-        $this->mediaModel->create([
-            'client_name'  => $fileClientName,
-            'file_name'    => $FileName,
-            'mime_type_id' => $mimeType->id,
-        ]);
+            $media = $this->mediaModelFactory->makeFrom($uploadedFile);
+        }
 
         return $this;
     }
@@ -51,5 +48,10 @@ class Media implements MediaInterface
     public function toCollection($name)
     {
         return $this;
+    }
+
+    public function getThumbnails()
+    {
+        return [];
     }
 }
