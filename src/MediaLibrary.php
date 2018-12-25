@@ -19,7 +19,7 @@ class MediaLibrary implements MediaLibraryInterface
     {
         $media = $this->mediaFactory->make();
 
-        app()->call([$media, 'store'], ['file' => $file]);
+        $media->store($file);
 
         return $media;
     }
