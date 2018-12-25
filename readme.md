@@ -17,6 +17,31 @@ $ composer require e200/mediavel
 
 ## Usage
 
+```php
+$mediaLibrary = new MediaLibrary();
+
+$media = $mediaLibrary
+  ->add($request->image) // Store the image
+  ->backupOriginal() // Make a copy of the original image
+  ->optimize() // Optimize the image (not the backup image)
+  ->resize(150, 150) // Creates a thumbnail (150x150) derived from the optimized image
+  ->resize(300, 300) // Creates a thumbnail (300x300)
+  ->resize(1024) // Creates a thumbnail (1024xAUTO)
+  ->resize('small')  // Creates a thumbnail from `mediavel.sizes.small` config
+  ->resize('medium')  // Creates a thumbnail from `mediavel.sizes.medium` config
+  ->resize('large')  // Creates a thumbnail from `mediavel.sizes.large` config
+  ->get() // Get the File model
+  ->withThumbnails(); // With the thumbnails
+
+$media->getId(); // 1
+$media->getPath(); // /images/2018/12/sl290s8xq0is9wqjk.jpg
+$thumbnails = $media->getThumbnails();
+
+$thumbnails['150x150']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-150x150.jpg
+$thumbnails['medium']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-150x150.jpg
+$thumbnails['large']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-1024.jpg
+```
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
