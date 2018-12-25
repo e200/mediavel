@@ -7,7 +7,7 @@ use e200\Mediavel\Models\MimeType;
 
 interface MediaInterface
 {
-    public function store(UploadedFile $file, MimeType $mimeType);
+    public function store(UploadedFile $file);
 
     public function backup();
 
