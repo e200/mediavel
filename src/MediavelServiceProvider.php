@@ -6,7 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
+use e200\Mediavel\Factories\MediaModelFactory;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
+use e200\Mediavel\Contracts\Factories\MediaModelFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,7 @@ class MediavelServiceProvider extends ServiceProvider
 
         $this->app->bind(MediaInterface::class, Media::class);
         $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
+        $this->app->bind(MediaModelFactoryInterface::class, MediaModelFactory::class);
     }
 
     /**
