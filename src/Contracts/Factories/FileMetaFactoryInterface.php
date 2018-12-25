@@ -6,5 +6,5 @@ use Illuminate\Http\UploadedFile;
 
 interface FileMetaFactoryInterface
 {
-    public function makeFrom(UploadedFile $uploadedFile);
+    public function makeFrom(UploadedFile $uploadedFile, $filePath);
 }

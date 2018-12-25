@@ -8,7 +8,7 @@ class FileMeta extends Model
 {
     protected $fillable = [
         'client_name',
-        'file_name',
+        'file_path',
         'mime_type_id',
     ];
 

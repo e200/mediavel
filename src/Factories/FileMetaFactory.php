@@ -18,7 +18,7 @@ class FileMetaFactory implements FileMetaFactoryInterface
         $this->mimeType = $mimeType;
     }
 
-    public function makeFrom(UploadedFile $uploadedFile)
+    public function makeFrom(UploadedFile $uploadedFile, $filePath)
     {
         $fileName = $fileMeta->hashName();
         $fileClientName = $fileMeta->getClientOriginalName();
@@ -28,7 +28,7 @@ class FileMetaFactory implements FileMetaFactoryInterface
 
         $fileMeta = $this->fileMeta->create([
             'client_name'  => $fileClientName,
-            'file_name'    => $fileName,
+            'file_path'    => $filePath,
             'mime_type_id' => $mimeType->id,
         ]);
 
