@@ -19,12 +19,12 @@ class MediaTest extends TestCase
 
         $fileMetaFactoryMock
             ->shouldReceive('makeFrom')
-            ->with(Mockery::any(), Mockery::any())
+            ->withAnyArgs()
             ->andReturns(Mockery::mock(FileMeta::class));
 
         $storageMock
             ->shouldReceive('store')
-            ->with(Mockery::any());
+            ->withAnyArgs();
 
         $media = $this->getInstance($fileMetaFactoryMock, $storageMock);
 
