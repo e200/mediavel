@@ -4,19 +4,44 @@ namespace e200\Mediavel\Http\Controllers;
 
 use Illuminate\Http\Request;
 use e200\Mediavel\ImageHandler;
+use e200\Mediavel\MediaLibrary;
 use Illuminate\Routing\Controller;
 
 class ImageController extends Controller
 {
-    protected $imageHandler;
+    protected $mediaLibrary;
 
-    public function __construct(ImageHandler $imageHandler)
+    public function __construct(MediaLibrary $mediaLibrary)
     {
-        $this->imageHandler = $imageHandler;
+        $this->mediaLibrary = $mediaLibrary;
     }
 
     public function resolve(Request $request)
     {
-        return $this->imageHandler->handle($request);
+        try {
+            $request->validate(
+                [
+                    'image' => 'bail|required|mimes:jpeg,jpg,png,gif,svg|max:5012',
+                ],
+                [
+                    'image.required' => 'Image must be provided',
+                    'image.mimes'    => 'Only jpg, png, gif and svg images are allowed',
+                    'image.size'     => 'MImage greater then max allowed size (5mb)',
+                ]
+            );
+
+            $image = $this->mediaLibrary->add($request->image);
+
+            return response()->json($image);
+        } catch (ValidationException $ex) {
+            $errors = $ex->errors();
+
+            $message = $errors['image'][0];
+
+            return response()->json([
+                'reason'     => $message,
+                'statusCode' => $ex->status,
+            ]);
+        }
     }
 }
