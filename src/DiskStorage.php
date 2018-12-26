@@ -7,11 +7,15 @@ use e200\Mediavel\Contracts\StorageInterface;
 
 class DiskStorage implements StorageInterface
 {
-    public function store(UploadedFile $uploadedFile)
+    public function store(UploadedFile $uploadedFile, $diskName = null)
     {
         $storagePath = $this->makeStorageRelativePath();
 
-        return $uploadedFile->store($storagePath);
+        if (is_null($diskName)) {
+            $diskName = config('mediavel.disk');
+        }
+
+        return $uploadedFile->store('media' . DIRECTORY_SEPARATOR . $storagePath, $diskName);
     }
 
     public function makeStorageRelativePath()
@@ -19,13 +23,12 @@ class DiskStorage implements StorageInterface
         $currentYear = date('Y');
         $currentMonth = date('m');
 
-        return implode(
-            DIRECTORY_SEPARATOR,
-            [
-                $currentYear,
-                $currentMonth,
-                time(),
-            ]
-        );
+        $storageRelativePathParts = [
+            $currentYear,
+            $currentMonth,
+            time(),
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $storageRelativePathParts);
     }
 }

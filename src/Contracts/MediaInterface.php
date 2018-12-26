@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 
 interface MediaInterface
 {
-    public function store(UploadedFile $file);
+    public function store(UploadedFile $file, $diskName = null);
 
     public function backupOriginal($path);
 

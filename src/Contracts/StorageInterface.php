@@ -6,5 +6,5 @@ use Illuminate\Http\UploadedFile;
 
 interface StorageInterface
 {
-    public function store(UploadedFile $uploadedFile);
+    public function store(UploadedFile $uploadedFil, $diskName);
 }

@@ -21,9 +21,9 @@ class Media implements MediaInterface
         $this->storage = $storage;
     }
 
-    public function store(UploadedFile $uploadedFile)
+    public function store(UploadedFile $uploadedFile, $diskName = null)
     {
-        $filePath = $this->storage->store($uploadedFile);
+        $filePath = $this->storage->store($uploadedFile, $diskName);
 
         $fileMeta = $this->fileMetaFactory->makeFrom($uploadedFile, $filePath);
 
