@@ -15,7 +15,7 @@ class DiskStorage implements StorageInterface
             $diskName = config('mediavel.disk');
         }
 
-        return $uploadedFile->store('media' . DIRECTORY_SEPARATOR . $storagePath, $diskName);
+        return $uploadedFile->store('media'.DIRECTORY_SEPARATOR.$storagePath, $diskName);
     }
 
     public function makeStorageRelativePath()
