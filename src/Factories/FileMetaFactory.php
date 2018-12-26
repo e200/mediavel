@@ -9,8 +9,8 @@ use e200\Mediavel\Contracts\Factories\FileMetaFactoryInterface;
 
 class FileMetaFactory implements FileMetaFactoryInterface
 {
-    protected $mimeType;
     protected $fileMeta;
+    protected $mimeType;
 
     public function __construct(FileMeta $fileMeta, MimeType $mimeType)
     {
@@ -20,9 +20,9 @@ class FileMetaFactory implements FileMetaFactoryInterface
 
     public function makeFrom(UploadedFile $uploadedFile, $filePath)
     {
-        $fileName = $fileMeta->hashName();
-        $fileClientName = $fileMeta->getClientOriginalName();
-        $fileMimeType = $fileMeta->getMimeType();
+        $fileName = $uploadedFile->hashName();
+        $fileClientName = $uploadedFile->getClientOriginalName();
+        $fileMimeType = $uploadedFile->getMimeType();
 
         $mimeType = $this->mimeType->firstOrCreate(['value' => $fileMimeType]);
 
