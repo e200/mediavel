@@ -3,7 +3,6 @@
 namespace e200\Mediavel\Tests;
 
 use Mockery;
-use org\bovigo\vfs\vfsStream;
 use e200\Mediavel\DiskStorage;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
@@ -11,8 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class DiskStorageTest extends TestCase
 {
-    protected $root;
-
     public function testMakeStorageRelativePath()
     {
         $diskStorage = $this->getInstance();
@@ -52,10 +49,8 @@ class DiskStorageTest extends TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        $this->root = vfsStream::setup('/storage');
-
         // Setup default database to use sqlite :memory:
-        $app['config']->set('mediavel.storage.path', $this->root->url());
+        // $app['config']->set('mediavel.storage.path', $this->root->url());
     }
 
     protected function tearDown()
