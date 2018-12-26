@@ -23,4 +23,29 @@ class MediaLibrary implements MediaLibraryInterface
 
         return $media;
     }
+
+    public function get($id)
+    {
+        //
+    }
+
+    public function del($id)
+    {
+        //
+    }
+
+    public function createCollection($name)
+    {
+        //
+    }
+
+    public function getCollection($name)
+    {
+        //
+    }
+
+    public function delCollection($name)
+    {
+        //
+    }
 }
