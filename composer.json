@@ -1,5 +1,5 @@
 {
-    "name": "e200/Mediavel",
+    "name": "e200/mediavel",
     "version": "0.1",
     "description": "Laravel media library package",
     "license": "MIT",
@@ -10,7 +10,7 @@
             "homepage": "https://e200.github.io"
         }
     ],
-    "homepage": "https://github.com/e200/Mediavel",
+    "homepage": "https://github.com/e200/mediavel",
     "keywords": ["Laravel", "Mediavel"],
     "require": {
         "illuminate/support": "~5",
