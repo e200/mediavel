@@ -34,12 +34,13 @@ class DiskStorageTest extends TestCase
     public function testStore()
     {
         $diskStorage = $this->getInstance();
+        $diskName = 'public';
 
         $fakeUploadedFile = UploadedFile::fake()->image('avatar.jpg');
 
-        $filePath = $diskStorage->store($fakeUploadedFile);
+        $filePath = $diskStorage->store($fakeUploadedFile, $diskName);
 
-        Storage::assertExists($filePath);
+        Storage::disk($diskName)->assertExists($filePath);
     }
 
     protected function getInstance()
