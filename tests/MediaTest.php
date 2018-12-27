@@ -37,7 +37,7 @@ class MediaTest extends TestCase
     {
         $media = $this->getInstance();
 
-        $this->assertEquals($media, $media->backupOriginal(null));
+        $this->assertEquals($media, $media->backupOriginal());
     }
 
     public function testOptimize()
