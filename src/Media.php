@@ -30,8 +30,16 @@ class Media implements MediaInterface
         return $this;
     }
 
-    public function backupOriginal($path)
+    public function backupOriginal()
     {
+        $fileMeta = $this->fileMeta;
+
+        if (is_null($fileMeta)) {
+            // throwException
+        }
+
+        echo $fileMeta->getDirPath();
+
         return $this;
     }
 
