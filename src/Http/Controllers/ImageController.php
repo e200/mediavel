@@ -3,7 +3,6 @@
 namespace e200\Mediavel\Http\Controllers;
 
 use Illuminate\Http\Request;
-use e200\Mediavel\ImageHandler;
 use e200\Mediavel\MediaLibrary;
 use Illuminate\Routing\Controller;
 
