@@ -16,4 +16,11 @@ class FileMeta extends Model
     {
         return $this->belongsTo(MimeType::class);
     }
+
+    public function getDirPath()
+    {
+        $fileName = self::$file_name;
+
+        return dirname($fileName);
+    }
 }
