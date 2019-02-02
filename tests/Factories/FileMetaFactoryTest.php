@@ -3,14 +3,14 @@
 namespace e200\Mediavel\Tests\Factories;
 
 use Mockery;
+use e200\Mediavel\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
-use e200\Mediavel\Models\Media;
 use e200\Mediavel\Models\MimeType;
-use e200\Mediavel\MediavelServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
+use e200\Mediavel\MediavelServiceProvider;
 
-class MediaFactoryTest extends TestCase
+class FileMetaFactoryTest extends TestCase
 {
     /**
      * Test if controller calls

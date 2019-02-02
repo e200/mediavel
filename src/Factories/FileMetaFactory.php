@@ -2,12 +2,12 @@
 
 namespace e200\Mediavel\Factories;
 
-use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Models\Media;
+use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
-class MediaFactory implements MediaFactoryInterface
+class FileMetaFactory implements MediaFactoryInterface
 {
     protected $Media;
     protected $mimeType;
