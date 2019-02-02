@@ -22,7 +22,7 @@ $mediaLibrary = new MediaLibrary();
 
 $media = $mediaLibrary
   ->add($request->image) // Store the image
-  ->backupOriginal() // Make a copy of the original image
+  ->preserveOriginal() // Make a copy of the original image
   ->optimize() // Optimize the image (not the backup image)
   ->resize(150, 150) // Creates a thumbnail (150x150) derived from the optimized image
   ->resize(300, 300) // Creates a thumbnail (300x300)
