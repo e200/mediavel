@@ -6,27 +6,26 @@ use Mockery;
 use e200\Mediavel\Media;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
-use e200\Mediavel\Models\FileMeta;
 use e200\Mediavel\Contracts\StorageInterface;
-use e200\Mediavel\Contracts\Factories\FileMetaFactoryInterface;
+use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
 class MediaTest extends TestCase
 {
     public function testStore()
     {
-        $fileMetaFactoryMock = Mockery::mock(FileMetaFactoryInterface::class);
+        $MediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
         $storageMock = Mockery::mock(StorageInterface::class);
 
-        $fileMetaFactoryMock
+        $MediaFactoryMock
             ->shouldReceive('makeFrom')
             ->withAnyArgs()
-            ->andReturns(Mockery::mock(FileMeta::class));
+            ->andReturns(Mockery::mock(Media::class));
 
         $storageMock
             ->shouldReceive('store')
             ->withAnyArgs();
 
-        $media = $this->getInstance($fileMetaFactoryMock, $storageMock);
+        $media = $this->getInstance($MediaFactoryMock, $storageMock);
 
         $uploadedFile = UploadedFile::fake()->image('avatar.jpg');
 
@@ -63,17 +62,17 @@ class MediaTest extends TestCase
         $this->assertEquals($media, $media->toCollection('name'));
     }
 
-    protected function getInstance($fileMetaFactoryMock = null, $storage = null)
+    protected function getInstance($MediaFactoryMock = null, $storage = null)
     {
-        if (is_null($fileMetaFactoryMock)) {
-            $fileMetaFactoryMock = Mockery::mock(FileMetaFactoryInterface::class);
+        if (is_null($MediaFactoryMock)) {
+            $MediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
         }
 
         if (is_null($storage)) {
             $storage = Mockery::mock(StorageInterface::class);
         }
 
-        return new Media($fileMetaFactoryMock, $storage);
+        return new Media($MediaFactoryMock, $storage);
     }
 
     protected function tearDown()

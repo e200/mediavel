@@ -4,8 +4,10 @@ namespace e200\Mediavel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FileMeta extends Model
+class Media extends Model
 {
+    use MediaTrait;
+
     protected $fillable = [
         'client_name',
         'file_path',
