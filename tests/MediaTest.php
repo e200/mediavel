@@ -3,7 +3,7 @@
 namespace e200\Mediavel\Tests;
 
 use Mockery;
-use e200\Mediavel\Media;
+use e200\Mediavel\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Contracts\StorageInterface;

@@ -8,7 +8,7 @@ interface MediaInterface
 {
     public function store(UploadedFile $file, $diskName = null);
 
-    public function backupOriginal();
+    public function preserveOriginal();
 
     public function optimize();
 

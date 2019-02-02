@@ -3,18 +3,18 @@
 namespace e200\Mediavel\Factories;
 
 use Illuminate\Http\UploadedFile;
-use e200\Mediavel\Models\FileMeta;
+use e200\Mediavel\Models\Media;
 use e200\Mediavel\Models\MimeType;
-use e200\Mediavel\Contracts\Factories\FileMetaFactoryInterface;
+use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
-class FileMetaFactory implements FileMetaFactoryInterface
+class MediaFactory implements MediaFactoryInterface
 {
-    protected $fileMeta;
+    protected $Media;
     protected $mimeType;
 
-    public function __construct(FileMeta $fileMeta, MimeType $mimeType)
+    public function __construct(Media $Media, MimeType $mimeType)
     {
-        $this->fileMeta = $fileMeta;
+        $this->Media = $Media;
         $this->mimeType = $mimeType;
     }
 
@@ -26,12 +26,12 @@ class FileMetaFactory implements FileMetaFactoryInterface
 
         $mimeType = $this->mimeType->firstOrCreate(['value' => $fileMimeType]);
 
-        $fileMeta = $this->fileMeta->create([
+        $Media = $this->Media->create([
             'client_name'  => $fileClientName,
             'file_path'    => $filePath,
             'mime_type_id' => $mimeType->id,
         ]);
 
-        return $fileMeta;
+        return $Media;
     }
 }

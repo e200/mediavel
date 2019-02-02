@@ -5,12 +5,12 @@ namespace e200\Mediavel\Tests\Factories;
 use Mockery;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
-use e200\Mediavel\Models\FileMeta;
+use e200\Mediavel\Models\Media;
 use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\MediavelServiceProvider;
-use e200\Mediavel\Factories\FileMetaFactory;
+use e200\Mediavel\Factories\MediaFactory;
 
-class FileMetaFactoryTest extends TestCase
+class MediaFactoryTest extends TestCase
 {
     /**
      * Test if controller calls
@@ -33,17 +33,17 @@ class FileMetaFactoryTest extends TestCase
             ->with('id')
             ->andReturns(1);
 
-        $fileMetaMock = Mockery::mock(FileMeta::class);
+        $MediaMock = Mockery::mock(Media::class);
 
-        $fileMetaMock->shouldReceive('getAttribute');
+        $MediaMock->shouldReceive('getAttribute');
 
-        $fileMetaMock
+        $MediaMock
             ->shouldReceive('create')
             ->withAnyArgs()
-            ->andReturns($fileMetaMock);
+            ->andReturns($MediaMock);
 
-        $fileMetaFactory = new FileMetaFactory(
-            $fileMetaMock,
+        $MediaFactory = new MediaFactory(
+            $MediaMock,
             $mimeTypeMock
         );
 
@@ -61,9 +61,9 @@ class FileMetaFactoryTest extends TestCase
             ->shouldReceive('getMimeType')
             ->andReturns('image/jpg');
 
-        $fileMeta = $fileMetaFactory->makeFrom($uploadedFileMock, '/storage/image.jpg');
+        $Media = $MediaFactory->makeFrom($uploadedFileMock, '/storage/image.jpg');
 
-        $this->assertInstanceOf(FileMeta::class, $fileMeta);
+        $this->assertInstanceOf(Media::class, $Media);
     }
 
     protected function tearDown()
