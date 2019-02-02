@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFileMetasTable extends Migration
+class CreateMediasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFileMetasTable extends Migration
      */
     public function up()
     {
-        Schema::create('file_metas', function (Blueprint $table) {
+        Schema::create('medias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('client_name');
             $table->string('file_path')->nullable();
@@ -46,6 +46,6 @@ class CreateFileMetasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_metas');
+        Schema::dropIfExists('medias');
     }
 }
