@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'disk' => 'public',
+    'disk' => [
+        'default' => 'public'
+    ],
+    'storage' => [
+        'name' => 'medias'
+    ]
 ];
