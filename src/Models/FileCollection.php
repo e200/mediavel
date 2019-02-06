@@ -8,7 +8,7 @@ class FileCollection extends Model
 {
     protected $fillable = ['name'];
 
-    public function medias()
+    public function files()
     {
         return $this->hasMany(File::class);
     }
