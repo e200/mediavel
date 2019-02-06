@@ -2,11 +2,15 @@
 
 namespace e200\Mediavel\Models;
 
+use e200\Mediavel\MediaTrait;
 use Illuminate\Database\Eloquent\Model;
+use e200\Mediavel\Contracts\MediaInterface;
 
-class Media extends Model
+class Media extends Model implements MediaInterface
 {
     use MediaTrait;
+
+    protected $table = 'medias';
 
     protected $fillable = [
         'client_name',
