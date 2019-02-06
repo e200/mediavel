@@ -2,7 +2,6 @@
 
 namespace e200\Mediavel\Http\Controllers;
 
-use e200\Mediavel\Media;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;

@@ -3,15 +3,11 @@
 namespace e200\Mediavel;
 
 use e200\Mediavel\Models\Media;
-use League\Flysystem\Adapter\Local;
-use Psr\Http\Message\RequestInterface;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
 use e200\Mediavel\Factories\MimeTypeFactory;
-use Illuminate\Contracts\Filesystem\Factory;
-use Illuminate\Filesystem\FilesystemManager;
 use Intervention\Image\ImageServiceProvider;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;

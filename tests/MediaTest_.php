@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 
-class MediaTest extends TestCase
+class MediaTest_ extends TestCase
 {
     public function testStore()
     {

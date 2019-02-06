@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\Storage;
 
-class DiskStorageTest extends TestCase
+class DiskStorageTest_ extends TestCase
 {
     public function testMakeStorageRelativePath()
     {

@@ -2,7 +2,6 @@
 
 namespace e200\Mediavel;
 
-use League\Flysystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +29,7 @@ class LocalStorage implements StorageInterface
 
         $fileName = $this->getFileName($fileExt);
 
-        $newFileName = $storagePath . DIRECTORY_SEPARATOR . $fileName;
+        $newFileName = $storagePath.DIRECTORY_SEPARATOR.$fileName;
 
         Storage::disk($disk)->put($newFileName, File::get($file));
 
@@ -56,6 +55,6 @@ class LocalStorage implements StorageInterface
 
     public function getFileName($ext)
     {
-        return uniqid(). '.' . $ext;
+        return uniqid().'.'.$ext;
     }
 }

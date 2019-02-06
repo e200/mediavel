@@ -8,7 +8,7 @@ use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\MediavelServiceProvider;
 use e200\Mediavel\Contracts\MediaInterface;
 
-class MediaFactoryTest extends TestCase
+class MediaFactoryTest_ extends TestCase
 {
     /**
      * Test if controller calls

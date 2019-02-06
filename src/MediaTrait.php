@@ -2,11 +2,8 @@
 
 namespace e200\Mediavel;
 
-use Laravel\Lumen\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
@@ -70,7 +67,7 @@ trait MediaTrait
 
         $parentImagePath = $this->file_path;
 
-        $image = Image::make(storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $parentImagePath);
+        $image = Image::make(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.$parentImagePath);
 
         $imageHeight = $image->height();
 
@@ -104,14 +101,14 @@ trait MediaTrait
     {
         $fileInfo = pathinfo($parentFileName);
 
-        return $fileInfo['dirname'] .
-                DIRECTORY_SEPARATOR .
-                $fileInfo['filename'] .
-                '-' .
-                $width .
-                'x' .
-                $height .
-                '.' .
+        return $fileInfo['dirname'].
+                DIRECTORY_SEPARATOR.
+                $fileInfo['filename'].
+                '-'.
+                $width.
+                'x'.
+                $height.
+                '.'.
                 $fileInfo['extension'];
     }
 

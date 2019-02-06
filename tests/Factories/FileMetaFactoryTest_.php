@@ -10,7 +10,7 @@ use e200\Mediavel\Models\MimeType;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\MediavelServiceProvider;
 
-class FileMetaFactoryTest extends TestCase
+class FileMetaFactoryTest_ extends TestCase
 {
     /**
      * Test if controller calls
