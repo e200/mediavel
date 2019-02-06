@@ -4,7 +4,7 @@ namespace e200\Mediavel\Http\Controllers;
 
 use Illuminate\Http\Request;
 use e200\Mediavel\FileHandler;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 
 class FileController extends Controller
 {
