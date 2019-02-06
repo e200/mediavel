@@ -7,15 +7,17 @@ use e200\Mediavel\Contracts\StorageInterface;
 
 class DiskStorage implements StorageInterface
 {
-    public function store(UploadedFile $uploadedFile, $diskName = null)
+    public function store(UploadedFile $uploadedFile, $disk = null)
     {
         $storagePath = $this->makeStorageRelativePath();
 
-        if (is_null($diskName)) {
-            $diskName = config('mediavel.disk');
+        if (is_null($disk)) {
+            $disk = config('mediavel.disk.default');
         }
 
-        return $uploadedFile->store('media'.DIRECTORY_SEPARATOR.$storagePath, $diskName);
+        $storageName = config('mediavel.storage.name');
+
+        return $uploadedFile->store($storageName.DIRECTORY_SEPARATOR.$storagePath, $disk);
     }
 
     public function makeStorageRelativePath()
