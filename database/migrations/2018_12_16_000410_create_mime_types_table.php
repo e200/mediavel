@@ -15,7 +15,7 @@ class CreateMimeTypesTable extends Migration
     {
         Schema::create('mime_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('value');
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }

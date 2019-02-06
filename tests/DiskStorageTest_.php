@@ -3,7 +3,7 @@
 namespace e200\Mediavel\Tests;
 
 use Mockery;
-use e200\Mediavel\DiskStorage;
+use e200\Mediavel\LocalStorage;
 use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\Storage;
@@ -12,12 +12,12 @@ class DiskStorageTest extends TestCase
 {
     public function testMakeStorageRelativePath()
     {
-        $diskStorage = $this->getInstance();
+        $localStorage = $this->getInstance();
 
         $currentYear = date('Y');
         $currentMonth = date('m');
 
-        $storageDirPath = $diskStorage->makeStorageRelativePath();
+        $storageDirPath = $localStorage->makeStorageRelativePath();
 
         $this->assertNotEmpty($storageDirPath);
 
@@ -33,19 +33,19 @@ class DiskStorageTest extends TestCase
 
     public function testStore()
     {
-        $diskStorage = $this->getInstance();
+        $localStorage = $this->getInstance();
         $diskName = 'public';
 
         $fakeUploadedFile = UploadedFile::fake()->image('avatar.jpg');
 
-        $filePath = $diskStorage->store($fakeUploadedFile, $diskName);
+        $filePath = $localStorage->store($fakeUploadedFile, $diskName);
 
         Storage::disk($diskName)->assertExists($filePath);
     }
 
     protected function getInstance()
     {
-        return new DiskStorage();
+        return new LocalStorage();
     }
 
     protected function getEnvironmentSetUp($app)

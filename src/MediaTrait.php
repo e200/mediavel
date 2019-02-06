@@ -4,6 +4,9 @@ namespace e200\Mediavel;
 
 use Laravel\Lumen\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
 use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
@@ -24,13 +27,21 @@ trait MediaTrait
         $this->storage = $storage;
     }
 
-    public function store(UploadedFile $uploadedFile, $diskName = null)
+    public function store($file, $disk = null)
     {
-        $storedFilePath = $this->storage->store($uploadedFile, $diskName);
+        $storedFilePath = $this->storage->store($file, $disk);
 
-        $fileName = $uploadedFile->hashName();
-        $fileClientName = $uploadedFile->getClientOriginalName();
-        $fileMimeType = $uploadedFile->getMimeType();
+        if (is_string($file)) {
+            $fileName = pathinfo($file, PATHINFO_BASENAME);
+            $fileClientName = pathinfo($file, PATHINFO_BASENAME);
+            $fileName = pathinfo($file, PATHINFO_BASENAME);
+        }
+
+        if ($file instanceof UploadedFile) {
+            $fileName = $file->hashName();
+            $fileClientName = $file->getClientOriginalName();
+            $fileMimeType = $file->getMimeType();
+        }
 
         $mimeType = $this->mimeTypeFactory->make($fileMimeType);
 
@@ -41,6 +52,67 @@ trait MediaTrait
         $this->save();
 
         return $this;
+    }
+
+    public function generateThumbnails()
+    {
+        $thumbnailSizes = config('mediavel.thumbnails');
+
+        foreach ($thumbnailSizes as $thumbnailSize) {
+            $this->generateThumbnail($thumbnailSize);
+        }
+    }
+
+    public function generateThumbnail($thumbnailSize)
+    {
+        $width = null;
+        $height = null;
+
+        $parentImagePath = $this->file_path;
+
+        $image = Image::make(storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $parentImagePath);
+
+        $imageHeight = $image->height();
+
+        if (is_array($thumbnailSize)) {
+            $width = $thumbnailSize[0];
+            $height = $thumbnailSize[1];
+        } else {
+            $width = $thumbnailSize;
+            $height = $thumbnailSize;
+        }
+
+        if ($imageHeight < $height) {
+            $height = $imageHeight;
+        }
+
+        $image->crop($width, $height);
+
+        $thumbnailFileName = $this->getThumbnailFileName($parentImagePath, $width, $height);
+
+        $image->save($thumbnailFileName);
+
+        $thumbnailMedia = $this->mediaFactory->make();
+
+        $thumbnailMedia->file_path = $thumbnailFileName;
+        $thumbnailMedia->mime_type_id = $this->mime_type_id;
+
+        $thumbnailMedia->save();
+    }
+
+    public function getThumbnailFileName($parentFileName, $width, $height)
+    {
+        $fileInfo = pathinfo($parentFileName);
+
+        return $fileInfo['dirname'] .
+                DIRECTORY_SEPARATOR .
+                $fileInfo['filename'] .
+                '-' .
+                $width .
+                'x' .
+                $height .
+                '.' .
+                $fileInfo['extension'];
     }
 
     public function preserveOriginal()

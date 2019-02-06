@@ -4,75 +4,29 @@ namespace e200\Mediavel\Tests;
 
 use Mockery;
 use e200\Mediavel\Models\Media;
-use Illuminate\Http\UploadedFile;
 use Orchestra\Testbench\TestCase;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
+use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
 
 class MediaTest extends TestCase
 {
-    public function testStore()
+    public function testGetThumbnailFilename()
     {
-        $MediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
+        $media = $this->getInstance();
+
+        $parentFileName = 'medias/2019/02/1549447594/icECvudN64gd3pOKz7G1f0afACLhDCHmZ8X4hhWu.jpeg';
+
+        $this->assertEquals($media->getThumbnailFilename($parentFileName, 100, 100), 'medias/2019/02/1549447594/icECvudN64gd3pOKz7G1f0afACLhDCHmZ8X4hhWu-100x100.jpeg');
+    }
+
+    protected function getInstance()
+    {
+        $mediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
+        $mimeTypeFactoryMock = Mockery::mock(MimeTypeFactoryInterface::class);
         $storageMock = Mockery::mock(StorageInterface::class);
 
-        $MediaFactoryMock
-            ->shouldReceive('makeFrom')
-            ->withAnyArgs()
-            ->andReturns(Mockery::mock(Media::class));
-
-        $storageMock
-            ->shouldReceive('store')
-            ->withAnyArgs();
-
-        $media = $this->getInstance($MediaFactoryMock, $storageMock);
-
-        $uploadedFile = UploadedFile::fake()->image('avatar.jpg');
-
-        $this->assertEquals($media, $media->store($uploadedFile));
-    }
-
-    public function testBackupOriginal()
-    {
-        static::markTestSkipped('must be revisited.');
-
-        $media = $this->getInstance();
-
-        // $this->assertEquals($media, $media->backupOriginal());
-    }
-
-    public function testOptimize()
-    {
-        $media = $this->getInstance();
-
-        $this->assertEquals($media, $media->optimize());
-    }
-
-    public function testResize()
-    {
-        $media = $this->getInstance();
-
-        $this->assertEquals($media, $media->resize(0, 0));
-    }
-
-    public function testToCollection()
-    {
-        $media = $this->getInstance();
-
-        $this->assertEquals($media, $media->toCollection('name'));
-    }
-
-    protected function getInstance($MediaFactoryMock = null, $storage = null)
-    {
-        if (is_null($MediaFactoryMock)) {
-            $MediaFactoryMock = Mockery::mock(MediaFactoryInterface::class);
-        }
-
-        if (is_null($storage)) {
-            $storage = Mockery::mock(StorageInterface::class);
-        }
-
-        return new Media($MediaFactoryMock, $storage);
+        return new Media($mediaFactoryMock, $mimeTypeFactoryMock, $storageMock);
     }
 
     protected function tearDown()

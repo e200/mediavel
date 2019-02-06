@@ -9,6 +9,12 @@ class MimeTypeFactory implements MimeTypeFactoryInterface
 {
     public function make($value)
     {
+        $firstMimeType = MimeType::where('value', $value)->first();
+
+        if ($firstMimeType) {
+            return $firstMimeType;
+        }
+
         $mimeType = app(MimeType::class);
 
         $mimeType->value = $value;

@@ -27,6 +27,8 @@ class ImageController extends Controller
 
             $storedImage = $media->store($request->image);
 
+            $storedImage->generateThumbnails();
+
             return response()->json($storedImage);
         } catch (ValidationException $ex) {
             $errors = $ex->errors();
