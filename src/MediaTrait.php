@@ -70,6 +70,7 @@ trait MediaTrait
         $image = Image::make(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.$parentImagePath);
 
         $imageHeight = $image->height();
+        $imageWidth = $image->width();
 
         if (is_array($thumbnailSize)) {
             $width = $thumbnailSize[0];
@@ -81,6 +82,10 @@ trait MediaTrait
 
         if ($imageHeight < $height) {
             $height = $imageHeight;
+        }
+
+        if ($imageWidth < $width) {
+            $width = $imageWidth;
         }
 
         $image->crop($width, $height);
