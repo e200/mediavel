@@ -2,12 +2,18 @@
 
 namespace e200\Mediavel;
 
+use e200\Mediavel\Models\Media;
+use Psr\Http\Message\RequestInterface;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
+use e200\Mediavel\Factories\MimeTypeFactory;
+use Illuminate\Contracts\Filesystem\Factory;
+use Illuminate\Filesystem\FilesystemManager;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
+use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
 {
@@ -43,9 +49,14 @@ class MediavelServiceProvider extends ServiceProvider
             return new Mediavel;
         });
 
+        $this->app->singleton(Factory::class, function ($app) {
+                return new FilesystemManager($app);
+            }
+        );
+
         $this->app->bind(MediaInterface::class, Media::class);
         $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
-        $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
+        $this->app->bind(MimeTypeFactoryInterface::class, MimeTypeFactory::class);
         $this->app->bind(StorageInterface::class, DiskStorage::class);
     }
 
