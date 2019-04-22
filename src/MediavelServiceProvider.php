@@ -2,6 +2,7 @@
 
 namespace e200\Mediavel;
 
+use e200\Mediavel\MediaLibrary;
 use e200\Mediavel\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
@@ -25,7 +26,7 @@ class MediavelServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'e200');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'e200');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
+        // $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -49,8 +50,11 @@ class MediavelServiceProvider extends ServiceProvider
 
         $this->app->bind(MediaInterface::class, Media::class);
         $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
-        $this->app->bind(MimeTypeFactoryInterface::class, MimeTypeFactory::class);
         $this->app->bind(StorageInterface::class, LocalStorage::class);
+
+        $this->app->singleton('medialibrary', function ($app) {
+            return $app->make(MediaLibrary::class);
+        });
 
         $this->app->register(ImageServiceProvider::class);
     }

@@ -26,7 +26,9 @@ class MediaLibrary implements MediaLibraryInterface
 
     public function get($id)
     {
-        //
+        $media = $this->mediaFactory->make();
+
+        return $media->find($id);
     }
 
     public function del($id)

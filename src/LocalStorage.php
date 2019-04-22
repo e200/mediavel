@@ -29,11 +29,11 @@ class LocalStorage implements StorageInterface
 
         $fileName = $this->getFileName($fileExt);
 
-        $newFileName = $storagePath.DIRECTORY_SEPARATOR.$fileName;
+        $storedFilePath = $storagePath.DIRECTORY_SEPARATOR.$fileName;
 
-        Storage::disk($disk)->put($newFileName, File::get($file));
+        Storage::disk($disk)->put($storedFilePath, File::get($file));
 
-        return $newFileName;
+        return $storedFilePath;
     }
 
     public function getStoragePath()

@@ -15,18 +15,13 @@ class CreateMediasTable extends Migration
     {
         Schema::create('medias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('client_name')->nullable();
+            $table->string('file_name')->nullable();
             $table->string('file_path');
 
             $table->unsignedInteger('owner_id')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
 
-            $table->unsignedInteger('mime_type_id');
-            $table->foreign('mime_type_id')
-                ->references('id')
-                ->on('mime_types')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->string('mime_type');
 
             $table->unsignedInteger('file_collection_id')->nullable();
             $table->foreign('file_collection_id')

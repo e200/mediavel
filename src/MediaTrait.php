@@ -10,75 +10,45 @@ use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
 
 trait MediaTrait
 {
-    protected $mediaFactory;
-    protected $mimeTypeFactory;
     protected $storage;
 
     public function __construct(
-        MediaFactoryInterface $mediaFactory,
-        MimeTypeFactoryInterface $mimeTypeFactory,
         StorageInterface $storage
     ) {
-        $this->mediaFactory = $mediaFactory;
-        $this->mimeTypeFactory = $mimeTypeFactory;
         $this->storage = $storage;
     }
 
     public function store($file, $disk = null)
     {
-        $storedFilePath = $this->storage->store($file, $disk);
-
-        if (is_string($file)) {
-            $fileName = pathinfo($file, PATHINFO_BASENAME);
-            $fileClientName = pathinfo($file, PATHINFO_BASENAME);
-            $fileName = pathinfo($file, PATHINFO_BASENAME);
-        }
-
         if ($file instanceof UploadedFile) {
-            $fileName = $file->hashName();
-            $fileClientName = $file->getClientOriginalName();
+            $fileName = $file->getClientOriginalName();
             $fileMimeType = $file->getMimeType();
         }
 
-        $mimeType = $this->mimeTypeFactory->make($fileMimeType);
+        $storedFilePath = $this->saveOnStorage($file);
 
-        $this->client_name = $fileClientName;
-        $this->file_path = $storedFilePath;
-        $this->mime_type_id = $mimeType->id;
-
-        $this->save();
+        $this->saveOnDatabase([
+            'file_name' => $fileName,
+            'file_path' => $storedFilePath,
+            'mime_type' => $fileMimeType
+        ]);
 
         return $this;
     }
 
-    public function generateThumbnails()
+    public function crop($size)
     {
-        $thumbnailSizes = config('mediavel.thumbnails');
+        $cropSize = config('mediavel.crop.sizes')[$size];
 
-        foreach ($thumbnailSizes as $thumbnailSize) {
-            $this->generateThumbnail($thumbnailSize);
-        }
-    }
+        $parentFilePath = $this->getFilePath();
 
-    public function generateThumbnail($thumbnailSize)
-    {
-        $width = null;
-        $height = null;
+        $width = $cropSize[0];
+        $height = $cropSize[1];
 
-        $parentImagePath = $this->file_path;
-
-        $image = Image::make(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.$parentImagePath);
+        $image = Image::make($parentFilePath);
 
         $imageHeight = $image->height();
         $imageWidth = $image->width();
-
-        if (is_array($thumbnailSize)) {
-            $width = $thumbnailSize[0];
-            $height = $thumbnailSize[1];
-        } else {
-            $width = $thumbnailSize;
-            $height = $thumbnailSize;
-        }
 
         if ($imageHeight < $height) {
             $height = $imageHeight;
@@ -88,23 +58,46 @@ trait MediaTrait
             $width = $imageWidth;
         }
 
-        $image->crop($width, $height);
+        $newImageFileName = $this->getFileNameFromParent($width, $height);
 
-        $thumbnailFileName = $this->getThumbnailFileName($parentImagePath, $width, $height);
+        $image
+            ->crop($width, $height)
+            ->save($newImageFileName);
 
-        $image->save($thumbnailFileName);
+        $this->saveOnDatabase([
+            'file_name' => $newImageFileName,
+            'mime_type' => $image->mime(),
+            'parent_id' => $this->id
+        ], true);
 
-        $thumbnailMedia = $this->mediaFactory->make();
-
-        $thumbnailMedia->file_path = $thumbnailFileName;
-        $thumbnailMedia->mime_type_id = $this->mime_type_id;
-
-        $thumbnailMedia->save();
+        return $this;
     }
 
-    public function getThumbnailFileName($parentFileName, $width, $height)
+    public function saveOnStorage($filePath, $disk = null)
     {
-        $fileInfo = pathinfo($parentFileName);
+        return $this->storage->store($filePath, $disk);
+    }
+
+    public function saveOnDatabase($data, $isChild = false)
+    {
+        if ($isChild) {
+            $media = new Self();
+        } else {
+            $media = $this;
+        }
+
+        foreach ($data as $key => $value) {
+            $media->{$key} = $value;
+        }
+
+        $media->save();
+
+        return $media;
+    }
+
+    public function getFileNameFromParent($width = null, $height = null)
+    {
+        $fileInfo = pathinfo($this->file_path);
 
         return $fileInfo['dirname'].
                 DIRECTORY_SEPARATOR.
@@ -117,30 +110,13 @@ trait MediaTrait
                 $fileInfo['extension'];
     }
 
-    public function preserveOriginal()
+    public function getFilePath()
     {
-        $this->getDirPath();
-
-        return $this;
+        return $this->file_path;
     }
 
-    public function optimize()
+    public function getFullFilePath()
     {
-        return $this;
-    }
-
-    public function resize($width, $heigth = null)
-    {
-        return $this;
-    }
-
-    public function toCollection($name)
-    {
-        return $this;
-    }
-
-    public function get()
-    {
-        return $this->file;
+        return storage_path().DIRECTORY_SEPARATOR.$this->getFilePath();
     }
 }
