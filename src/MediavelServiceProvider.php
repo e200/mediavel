@@ -2,17 +2,14 @@
 
 namespace e200\Mediavel;
 
-use e200\Mediavel\MediaLibrary;
 use e200\Mediavel\Models\Media;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
-use e200\Mediavel\Factories\MimeTypeFactory;
 use Intervention\Image\ImageServiceProvider;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
-use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
 
 class MediavelServiceProvider extends ServiceProvider
 {

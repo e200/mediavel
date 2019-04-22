@@ -5,8 +5,6 @@ namespace e200\Mediavel;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 use e200\Mediavel\Contracts\StorageInterface;
-use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
-use e200\Mediavel\Contracts\Factories\MimeTypeFactoryInterface;
 
 trait MediaTrait
 {
@@ -30,7 +28,7 @@ trait MediaTrait
         $this->saveOnDatabase([
             'file_name' => $fileName,
             'file_path' => $storedFilePath,
-            'mime_type' => $fileMimeType
+            'mime_type' => $fileMimeType,
         ]);
 
         return $this;
@@ -67,7 +65,7 @@ trait MediaTrait
         $this->saveOnDatabase([
             'file_name' => $newImageFileName,
             'mime_type' => $image->mime(),
-            'parent_id' => $this->id
+            'parent_id' => $this->id,
         ], true);
 
         return $this;
