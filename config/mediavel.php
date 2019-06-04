@@ -1,13 +1,11 @@
 <?php
 
+use e200\Mediavel\PathGenerator;
+
 return [
-    'disks' => ['default' => 'local'],
-    'folder_name' => 'uploads',
-    'crop' => [
-        'sizes' => [
-            'small' => 150,
-            'medium' => 300,
-            'large' => 1024,
-        ],
+    'disks' => [
+        'default' => 'public'
     ],
+    'folder_name' => 'media',
+    'path_generator' => PathGenerator::class,
 ];
