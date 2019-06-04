@@ -9,50 +9,51 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasThumbs
 {
-    public function generateThumbs(SizeResolverInterface $sizeResolver, $disk = null)
+    public function resize($name, array $dimensions, $disk = null)
     {
-        $thumbSizes = config('thumbs.sizes');
-
-        foreach ($thumbSizes as $sizeName => $thumbSize) {
-            $parentFile = $this->path;
-            $parentFilePath = Storage::disk($disk)->path($parentFile);
-
-            $image = Image::make($parentFilePath);
-
-            $sizeBag = $sizeResolver->resolve($thumbSize, $sizeName);
-
-            $thumbWidth = $sizeBag->getWidth();
-            $thumbHeight = $sizeBag->getHeight();
-
-            $image->fit($thumbWidth, $thumbHeight);
-
-            $imageWidth = $image->getWidth();
-            $imageHeight = $image->getheight();
-
-            $thumbFile = $this->getThumbFile(
-                $parentFile,
-                $imageWidth,
-                $imageHeight
-            );
-
-            $thumbFilePath = Storage::disk($disk)->path($thumbFile);
-
-            $image->save($thumbFilePath);
-
-            $fileMetas = [
-                'size' => $sizeName,
-                'width' => $image->getWidth(),
-                'height' => $image->getHeight()
-            ];
-
-            $this->thumbs()->create([
-                'path' => $thumbFile,
-                'mime_type' => $image->mime(),
-                'meta' => json_encode($fileMetas)
-            ]);
-
-            $image->destroy();
+        if (is_null($disk)) {
+            $disk = config('mediavel.disks.default');
         }
+
+        $parentFile = $this->path;
+
+        $parentFilePath = Storage::disk($disk)->path($parentFile);
+
+        $image = Image::make($parentFilePath);
+
+        $thumbWidth = $dimensions[0];
+        $thumbHeight = $dimensions[1];
+
+        $image->fit($thumbWidth, $thumbHeight);
+
+        $imageWidth = $image->getWidth();
+        $imageHeight = $image->getheight();
+
+        $thumbFile = $this->getThumbFile(
+            $parentFile,
+            $imageWidth,
+            $imageHeight
+        );
+
+        $thumbFilePath = Storage::disk($disk)->path($thumbFile);
+
+        $image->save($thumbFilePath);
+
+        $fileMetas = [
+            'size' => $name,
+            'width' => $image->getWidth(),
+            'height' => $image->getHeight()
+        ];
+
+        $this->thumbs()->create([
+            'path'      => $thumbFile,
+            'mime_type' => $image->mime(),
+            'meta'      => json_encode($fileMetas)
+        ]);
+
+        $image->destroy();
+
+        return $this;
     }
 
     public function getThumbFile($filename, $width, $height)
