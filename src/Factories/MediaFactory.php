@@ -3,7 +3,7 @@
 namespace e200\Mediavel\Factories;
 
 use e200\Mediavel\Contracts\MediaInterface;
-use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
+use e200\Mediavel\Contracts\MediaFactoryInterface;
 
 class MediaFactory implements MediaFactoryInterface
 {

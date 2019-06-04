@@ -2,7 +2,7 @@
 
 namespace e200\Mediavel\Models;
 
-use App\Models\Media;
+use e200\Mediavel\Media;
 use Illuminate\Database\Eloquent\Model;
 
 class MediaCollection extends Model
