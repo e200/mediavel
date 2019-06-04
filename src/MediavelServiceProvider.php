@@ -2,14 +2,25 @@
 
 namespace e200\Mediavel;
 
+use e200\Mediavel\Mediavel;
+use e200\Mediavel\DiskStorage;
+use e200\Mediavel\MediaLibrary;
 use e200\Mediavel\Models\Media;
+use e200\Mediavel\MediaResolver;
+use e200\Mediavel\PathGenerator;
+use e200\Mediavel\MediaValidator;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
+use e200\Mediavel\PathGeneratorInterface;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
 use Intervention\Image\ImageServiceProvider;
 use e200\Mediavel\Contracts\StorageInterface;
-use e200\Mediavel\Contracts\Factories\MediaFactoryInterface;
+use e200\Mediavel\Contracts\MediaInfoInterface;
+use e200\Mediavel\Contracts\FileStorageInterface;
+use e200\Mediavel\Contracts\MediaFactoryInterface;
+use e200\Mediavel\Contracts\MediaResolverInterface;
+use e200\Mediavel\Contracts\MediaValidatorInterface;
 
 class MediavelServiceProvider extends ServiceProvider
 {
@@ -45,11 +56,14 @@ class MediavelServiceProvider extends ServiceProvider
             return new Mediavel;
         });
 
+        $this->app->bind(MediaResolverInterface::class, MediaResolver::class);
         $this->app->bind(MediaInterface::class, Media::class);
+        $this->app->bind(MediaInfoInterface::class, MediaInfo::class);
+        $this->app->bind(MediaValidatorInterface::class, MediaValidator::class);
         $this->app->bind(MediaFactoryInterface::class, MediaFactory::class);
-        $this->app->bind(StorageInterface::class, LocalStorage::class);
+        $this->app->bind(StorageInterface::class, DiskStorage::class);
 
-        $this->app->singleton('medialibrary', function ($app) {
+        $this->app->singleton('mediaLibrary', function ($app) {
             return $app->make(MediaLibrary::class);
         });
 
