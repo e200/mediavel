@@ -3,7 +3,6 @@
 namespace e200\Mediavel;
 
 use e200\Mediavel\Models\MediaThumb;
-use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,15 +39,15 @@ trait HasThumbs
         $image->save($thumbFilePath);
 
         $fileMetas = [
-            'size' => $name,
+            'size' => $sizeName,
             'width' => $image->getWidth(),
-            'height' => $image->getHeight()
+            'height' => $image->getHeight(),
         ];
 
         $this->thumbs()->create([
-            'path'      => $thumbFile,
+            'path' => $thumbFile,
             'mime_type' => $image->mime(),
-            'meta'      => json_encode($fileMetas)
+            'meta' => json_encode($fileMetas),
         ]);
 
         $image->destroy();
@@ -81,14 +80,13 @@ trait HasThumbs
         $this
             ->all()
             ->each(function ($media) {
-            $media
+                $media
                 ->thumbs
                 ->each(function ($thumb) {
-                $thumb->delete();
+                    $thumb->delete();
+                });
+
+                app()->call([$media, 'generateThumbs']);
             });
-
-            app()->call([$media, 'generateThumbs']);
-        });
-
     }
 }

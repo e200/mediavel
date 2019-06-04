@@ -7,7 +7,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use e200\Mediavel\PathGeneratorInterface;
 use e200\Mediavel\Contracts\StorageInterface;
 
 class DiskStorage implements StorageInterface
@@ -18,16 +17,16 @@ class DiskStorage implements StorageInterface
             $disk = config('mediavel.disks.default');
         }
 
-        $fileName     = $uploadedFile->getClientOriginalName();
-        $filePath     = $uploadedFile->getPath();
-        $fileExt      = $uploadedFile->getClientOriginalExtension();
+        $fileName = $uploadedFile->getClientOriginalName();
+        $filePath = $uploadedFile->getPath();
+        $fileExt = $uploadedFile->getClientOriginalExtension();
         $fileMimeType = $uploadedFile->getMimeType();
 
         $randomFileName = $this->generateFilename($fileExt);
 
         $storagePath = $this->getStoragePath();
 
-        $uploadFilePath = $storagePath . DIRECTORY_SEPARATOR . $randomFileName;
+        $uploadFilePath = $storagePath.DIRECTORY_SEPARATOR.$randomFileName;
 
         Storage::disk($disk)->put($uploadFilePath, File::get($uploadedFile));
 
@@ -42,7 +41,7 @@ class DiskStorage implements StorageInterface
             'name'      => $fileName,
             'path'      => $uploadFilePath,
             'mime_type' => $fileMimeType,
-            'user_id'   => $userId
+            'user_id'   => $userId,
         ]);
 
         return $media;
@@ -61,6 +60,6 @@ class DiskStorage implements StorageInterface
 
     public function generateFilename($ext)
     {
-        return uniqid(). '.' . $ext;
+        return uniqid().'.'.$ext;
     }
 }

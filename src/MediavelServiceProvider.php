@@ -2,22 +2,14 @@
 
 namespace e200\Mediavel;
 
-use e200\Mediavel\Mediavel;
-use e200\Mediavel\DiskStorage;
-use e200\Mediavel\MediaLibrary;
 use e200\Mediavel\Models\Media;
-use e200\Mediavel\MediaResolver;
-use e200\Mediavel\PathGenerator;
-use e200\Mediavel\MediaValidator;
 use Illuminate\Support\ServiceProvider;
 use e200\Mediavel\Factories\MediaFactory;
-use e200\Mediavel\PathGeneratorInterface;
 use e200\Mediavel\Commands\MediavelCommand;
 use e200\Mediavel\Contracts\MediaInterface;
 use Intervention\Image\ImageServiceProvider;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\MediaInfoInterface;
-use e200\Mediavel\Contracts\FileStorageInterface;
 use e200\Mediavel\Contracts\MediaFactoryInterface;
 use e200\Mediavel\Contracts\MediaResolverInterface;
 use e200\Mediavel\Contracts\MediaValidatorInterface;

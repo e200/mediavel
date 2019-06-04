@@ -2,8 +2,6 @@
 
 namespace e200\Mediavel;
 
-use Illuminate\Http\UploadedFile;
-use e200\Mediavel\Contracts\MediaFactoryInterface;
 use e200\Mediavel\Contracts\MediaLibraryInterface;
 use e200\Mediavel\Contracts\MediaResolverInterface;
 
