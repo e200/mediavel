@@ -2,14 +2,15 @@
 
 namespace e200\Mediavel\Models;
 
+use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 
-class FileCollection extends Model
+class MediaCollection extends Model
 {
     protected $fillable = ['name'];
 
     public function files()
     {
-        return $this->hasMany(File::class);
+        return $this->hasMany(Media::class);
     }
 }

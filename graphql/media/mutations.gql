@@ -1,0 +1,7 @@
+extend type Mutation {
+  deleteMedia(id: ID!): Media @delete @guard
+  deleteMedias(ids: [ID]!): [Media] @guard
+  uploadImage(
+    file: Upload!
+  ): Media @guard
+}

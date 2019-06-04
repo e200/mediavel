@@ -1,0 +1,4 @@
+extend type Query {
+  media (id: ID! @eq) : Media @find
+  medias: [Media] @paginate
+}

@@ -2,21 +2,16 @@
 
 namespace App\Models;
 
-use App\HasThumbs;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Media extends Model
+class MediaThumb extends Model
 {
-    use HasThumbs;
-
     protected $fillable = [
-        'name',
         'path',
         'mime_type',
         'parent_id',
-        'meta',
-        'user_id'
+        'meta'
     ];
 
     /**
@@ -33,19 +28,13 @@ class Media extends Model
      *
      * @see https://todolink.com/laravel-dynamic-properties
      */
-    public function mediable()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Dynamic property to get the
-     * absolute URL
-     *
-     * @see https://todolink.com/laravel-dynamic-properties
-     */
     public function getUrlAttribute()
     {
         return Storage::url($this->path);
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class);
     }
 }
