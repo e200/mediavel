@@ -1,6 +1,6 @@
 <?php
 
-namespace e200\Mediavel;
+namespace e200\Mediavel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
