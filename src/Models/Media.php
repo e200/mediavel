@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace e200\Mediavel\Models;
 
-use App\HasThumbs;
+use e200\Mediavel\HasThumbs;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,6 +46,8 @@ class Media extends Model
      */
     public function getUrlAttribute()
     {
-        return Storage::url($this->path);
+        $disk = config('mediavel.disks.default');
+
+        return Storage::url($this->path, $disk);
     }
 }
