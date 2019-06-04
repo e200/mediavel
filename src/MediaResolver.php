@@ -2,7 +2,6 @@
 
 namespace e200\Mediavel;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\MediaResolverInterface;
