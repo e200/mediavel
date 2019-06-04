@@ -16,20 +16,20 @@ class Media extends Model
         'mime_type',
         'parent_id',
         'meta',
-        'user_id'
+        'user_id',
     ];
 
     /**
      * Makes the dynamic property `url`
-     * available in JSON responses
+     * available in JSON responses.
      */
     protected $appends = [
-        'url'
+        'url',
     ];
 
     /**
      * Dynamic property to get the
-     * absolute URL
+     * absolute URL.
      *
      * @see https://todolink.com/laravel-dynamic-properties
      */
@@ -40,7 +40,7 @@ class Media extends Model
 
     /**
      * Dynamic property to get the
-     * absolute URL
+     * absolute URL.
      *
      * @see https://todolink.com/laravel-dynamic-properties
      */

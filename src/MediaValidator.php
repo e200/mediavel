@@ -13,7 +13,7 @@ class MediaValidator implements MediaValidatorInterface
             'jpeg', 'jpg', 'png',
             'svg',  'ico', 'bmp',
             'gif',  'pdf', 'doc',
-            'docx', 'xml'
+            'docx', 'xml',
         ];
 
         $acceptedFileFormatsString = implode(',', $acceptedFileFormats);

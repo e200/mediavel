@@ -11,20 +11,20 @@ class MediaThumb extends Model
         'path',
         'mime_type',
         'parent_id',
-        'meta'
+        'meta',
     ];
 
     /**
      * Makes the dynamic property `url`
-     * available in JSON responses
+     * available in JSON responses.
      */
     protected $appends = [
-        'url'
+        'url',
     ];
 
     /**
      * Dynamic property to get the
-     * absolute URL
+     * absolute URL.
      *
      * @see https://todolink.com/laravel-dynamic-properties
      */

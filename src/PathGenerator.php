@@ -8,9 +8,9 @@ class PathGenerator implements PathGeneratorInterface
 {
     public function generate($path = null)
     {
-        $currentYear  = date('Y');
+        $currentYear = date('Y');
         $currentMonth = date('m');
-        $currentDay   = date('d');
+        $currentDay = date('d');
 
         $pathParts = [
             $path,

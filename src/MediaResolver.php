@@ -4,8 +4,6 @@ namespace e200\Mediavel;
 
 use Illuminate\Http\Request;
 use e200\Mediavel\Contracts\StorageInterface;
-use e200\Mediavel\Contracts\MediaInfoInterface;
-use e200\Mediavel\Contracts\MediaFactoryInterface;
 use e200\Mediavel\Contracts\MediaResolverInterface;
 use e200\Mediavel\Contracts\MediaValidatorInterface;
 
@@ -18,7 +16,7 @@ class MediaResolver implements MediaResolverInterface
         MediaValidatorInterface $mediaValidator,
         StorageInterface        $storage
     ) {
-        $this->storage        = $storage;
+        $this->storage = $storage;
         $this->mediaValidator = $mediaValidator;
     }
 
