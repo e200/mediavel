@@ -1,7 +1,0 @@
-enum MediaThumbSize {
-  XS @enum(value: "xs")
-  SM @enum(value: "sm")
-  MD @enum(value: "md")
-  COVER @enum(value: "cover")
-  BANNER @enum(value: "banner")
-}
