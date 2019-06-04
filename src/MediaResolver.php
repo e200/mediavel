@@ -3,6 +3,7 @@
 namespace e200\Mediavel;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use e200\Mediavel\Contracts\StorageInterface;
 use e200\Mediavel\Contracts\MediaInfoInterface;
 use e200\Mediavel\Contracts\MediaFactoryInterface;
@@ -22,11 +23,15 @@ class MediaResolver implements MediaResolverInterface
         $this->mediaValidator = $mediaValidator;
     }
 
-    public function resolve(Request $request, $field = 'media')
+    public function resolve($request, $field = 'media')
     {
-        $uploadedMedia = $request->{$field};
+        if ($request instanceof UploadedFile) {
+            $uploadedMedia = $request;
+        } else {
+            $uploadedMedia = $request->{$field};
 
-        $this->mediaValidator->validate($request, $field);
+            $this->mediaValidator->validate($request, $field);
+        }
 
         $media = $this->storage->store($uploadedMedia);
 
