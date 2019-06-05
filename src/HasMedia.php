@@ -6,17 +6,26 @@ use e200\Mediavel\Models\MediaThumb;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
-trait HasThumbs
+trait HasMedia
 {
+    public function preserveOriginal($value = true)
+    {
+        $this['preserve_original'] = $value;
+
+        $this->save();
+
+        return $this;
+    }
+
     public function resize($name, array $dimensions, $disk = null)
     {
         if (is_null($disk)) {
             $disk = config('mediavel.disks.default');
         }
 
-        $parentFile = $this->path;
+        $mediaFile = $this->path;
 
-        $parentFilePath = Storage::disk($disk)->path($parentFile);
+        $parentFilePath = Storage::disk($disk)->path($mediaFile);
 
         $image = Image::make($parentFilePath);
 
@@ -28,18 +37,22 @@ trait HasThumbs
         $imageWidth = $image->getWidth();
         $imageHeight = $image->getheight();
 
-        $thumbFile = $this->getThumbFile(
-            $parentFile,
-            $imageWidth,
-            $imageHeight
-        );
+        $imagePath = null;
 
-        $thumbFilePath = Storage::disk($disk)->path($thumbFile);
+        if ($this['preserve_original']) {
+            $thumbFile = $this->getThumbFile(
+                $mediaFile,
+                $imageWidth,
+                $imageHeight
+            );
+
+            $thumbFilePath = Storage::disk($disk)->path($thumbFile);
+        }
 
         $image->save($thumbFilePath);
 
         $fileMetas = [
-            'size' => $sizeName,
+            'size' => $name,
             'width' => $image->getWidth(),
             'height' => $image->getHeight(),
         ];
@@ -72,7 +85,7 @@ trait HasThumbs
 
     public function thumbs()
     {
-        return $this->hasMany(MediaThumb::class, 'parent_id');
+        return $this->hasMany(MediaThumb::class, 'media_id');
     }
 
     public function scopeRegenerateThumbs($disk)

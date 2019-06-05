@@ -2,13 +2,13 @@
 
 namespace e200\Mediavel\Models;
 
-use e200\Mediavel\HasThumbs;
+use e200\Mediavel\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
-    use HasThumbs;
+    use HasMedia;
 
     protected $fillable = [
         'name',
