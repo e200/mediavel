@@ -38,7 +38,7 @@ trait HasMedia
         $mediaArgs = [
             'width' => $image->getWidth(),
             'height' => $image->getHeight(),
-            'size_name' => $sizeName
+            'size_name' => $sizeName,
         ];
 
         if ($this['preserve_original']) {
