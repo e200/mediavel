@@ -17,9 +17,10 @@ class CreateMediaThumbsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('path');
-            $table->json('meta')->nullable();
-            $table->string('mime_type')->nullable();
+            $table->string('relative_path');
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->string('size_name')->nullable();
 
             $table->unsignedInteger('media_id')->nullable();
             $table

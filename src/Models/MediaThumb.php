@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Storage;
 class MediaThumb extends Model
 {
     protected $fillable = [
-        'path',
+        'relative_path',
+        'media_id',
+        'width',
+        'height',
+        'size_name',
         'mime_type',
-        'parent_id',
-        'meta',
     ];
 
     /**
@@ -30,7 +32,9 @@ class MediaThumb extends Model
      */
     public function getUrlAttribute()
     {
-        return Storage::url($this->path);
+        $disk = config('mediavel.disks.default');
+
+        return Storage::url($this['relative_path'], $disk);
     }
 
     public function media()

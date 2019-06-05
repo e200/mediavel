@@ -16,9 +16,11 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index()->nullable();
-            $table->string('path');
-            $table->json('meta')->nullable();
+            $table->string('relative_path');
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
             $table->string('mime_type')->nullable();
+            $table->boolean('preserve_original')->default(false);
 
             $table->unsignedInteger('mediable_id')->nullable();
             $table->string('mediable_type')->nullable();

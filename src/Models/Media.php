@@ -12,10 +12,10 @@ class Media extends Model
 
     protected $fillable = [
         'name',
-        'path',
+        'relative_path',
         'mime_type',
-        'parent_id',
-        'meta',
+        'width',
+        'height',
         'user_id',
     ];
 
@@ -48,6 +48,6 @@ class Media extends Model
     {
         $disk = config('mediavel.disks.default');
 
-        return Storage::url($this->path, $disk);
+        return Storage::url($this['relative_path'], $disk);
     }
 }

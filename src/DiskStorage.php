@@ -26,9 +26,9 @@ class DiskStorage implements StorageInterface
 
         $storagePath = $this->getStoragePath();
 
-        $uploadFilePath = $storagePath.DIRECTORY_SEPARATOR.$randomFileName;
+        $uploadFileRelativePath = $storagePath.DIRECTORY_SEPARATOR.$randomFileName;
 
-        Storage::disk($disk)->put($uploadFilePath, File::get($uploadedFile));
+        Storage::disk($disk)->put($uploadFileRelativePath, File::get($uploadedFile));
 
         $userId = null;
         $user = Auth::guard('api')->user();
@@ -38,10 +38,10 @@ class DiskStorage implements StorageInterface
         }
 
         $media = Media::create([
-            'name'      => $fileName,
-            'path'      => $uploadFilePath,
-            'mime_type' => $fileMimeType,
-            'user_id'   => $userId,
+            'name'          => $fileName,
+            'relative_path' => $uploadFileRelativePath,
+            'mime_type'     => $fileMimeType,
+            'user_id'       => $userId,
         ]);
 
         return $media;
