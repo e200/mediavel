@@ -17,58 +17,60 @@ trait HasMedia
         return $this;
     }
 
-    public function resize($name, array $dimensions, $disk = null)
+    public function resize($sizeName, array $dimensions, $disk = null)
     {
-        if (is_null($disk)) {
-            $disk = config('mediavel.disks.default');
-        }
+        $mediaRelativePath = $this['relative_path'];
 
-        $mediaFile = $this->path;
+        $resizeWidth = $dimensions[0];
+        $resizeHeight = $dimensions[1];
 
-        $parentFilePath = Storage::disk($disk)->path($mediaFile);
+        $disk = $disk ?? $disk = config('mediavel.disks.default');
 
-        $image = Image::make($parentFilePath);
+        $mediaAbsolutePath = $this->getAbsolutePath($mediaRelativePath, $disk);
 
-        $thumbWidth = $dimensions[0];
-        $thumbHeight = $dimensions[1];
+        $image = Image::make($mediaAbsolutePath);
 
-        $image->fit($thumbWidth, $thumbHeight);
+        $image->fit($resizeWidth, $resizeHeight);
 
         $imageWidth = $image->getWidth();
-        $imageHeight = $image->getheight();
+        $imageHeight = $image->getHeight();
 
-        $imagePath = null;
+        $mediaArgs = [
+            'width' => $image->getWidth(),
+            'height' => $image->getHeight(),
+            'size_name' => $sizeName
+        ];
 
         if ($this['preserve_original']) {
-            $thumbFile = $this->getThumbFile(
-                $mediaFile,
+            $thumbRelativePath = $this->getThumbFile(
+                $mediaRelativePath,
                 $imageWidth,
                 $imageHeight
             );
 
-            $thumbFilePath = Storage::disk($disk)->path($thumbFile);
+            $thumbAbsolutePath = $this->getAbsolutePath($thumbRelativePath, $disk);
+
+            $mediaArgs['relative_path'] = $thumbRelativePath;
+
+            $this->thumbs()->create($mediaArgs);
+
+            $image->save($thumbAbsolutePath);
+        } else {
+            $mediaArgs['relative_path'] = $mediaRelativePath;
+
+            $this->update($mediaArgs);
+
+            $this->save();
+
+            $image->save();
         }
-
-        $image->save($thumbFilePath);
-
-        $fileMetas = [
-            'size' => $name,
-            'width' => $image->getWidth(),
-            'height' => $image->getHeight(),
-        ];
-
-        $this->thumbs()->create([
-            'path' => $thumbFile,
-            'mime_type' => $image->mime(),
-            'meta' => json_encode($fileMetas),
-        ]);
 
         $image->destroy();
 
         return $this;
     }
 
-    public function getThumbFile($filename, $width, $height)
+    protected function getThumbFile($filename, $width, $height)
     {
         $pathInfo = pathinfo($filename);
 
@@ -81,6 +83,11 @@ trait HasMedia
                 $height.
                 '.'.
                 $pathInfo['extension'];
+    }
+
+    protected function getAbsolutePath($filename, $disk)
+    {
+        return Storage::disk($disk)->path($filename);
     }
 
     public function thumbs()
