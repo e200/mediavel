@@ -5,7 +5,9 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+A media library handler for Laravel.
+
+Right now, it only supports upload images and generate thumbnails from them.
 
 ## Installation
 
@@ -25,14 +27,15 @@ $media = $mediaLibrary
   ->preserveOriginal()           // Do not touch the original file
   ->resize('small', [75, 75])    // Creates a thumbnail (75x75) derived from the original image
   ->resize('medium', [150, 150]) // Creates a thumbnail (150x150)
-  ->resize('large', [1024])      // Creates a thumbnail (1024xAUTO);
+  ->resize('large', [1024, 300]) // Creates a thumbnail (1024xAUTO);
 
-$media->id;   // 1
-$media->path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
-$media->url;  // http://localhost:8000/images/2019/06/5cf6976f20dfb.jpg
+$media->id;            // 1
+$media->relative_path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
+$media->url;           // http://localhost:8000/images/2019/06/5cf6976f20dfb.jpg
+
 $thumbs = $media->thumbs();
 
-$thumbs['small']->path;  // /images/2018/12/5cf6976f20dfb-150x150.jpg
+$thumbs['small']->path;  // /images/2018/12/5cf6976f20dfb-75x75.jpg
 $thumbs['medium']->path; // /images/2018/12/5cf6976f20dfb-150x150.jpg
 $thumbs['large']->path;  // /images/2018/12/5cf6976f20dfb-1024x300.jpg
 ```
