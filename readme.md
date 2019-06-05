@@ -21,25 +21,20 @@ $ composer require e200/mediavel
 $mediaLibrary = new MediaLibrary();
 
 $media = $mediaLibrary
-  ->add($request->image) // Store the image
-  ->preserveOriginal() // Make a copy of the original image
-  ->optimize() // Optimize the image (not the backup image)
-  ->resize(150, 150) // Creates a thumbnail (150x150) derived from the optimized image
-  ->resize(300, 300) // Creates a thumbnail (300x300)
-  ->resize(1024) // Creates a thumbnail (1024xAUTO)
-  ->resize('small')  // Creates a thumbnail from `mediavel.sizes.small` config
-  ->resize('medium')  // Creates a thumbnail from `mediavel.sizes.medium` config
-  ->resize('large')  // Creates a thumbnail from `mediavel.sizes.large` config
-  ->get() // Get the File model
-  ->withThumbnails(); // With the thumbnails
+  ->add($request->image)         // Store the image
+  ->preserveOriginal()           // Do not touch the original file
+  ->resize('small', [75, 75])    // Creates a thumbnail (75x75) derived from the original image
+  ->resize('medium', [150, 150]) // Creates a thumbnail (150x150)
+  ->resize('large', [1024])      // Creates a thumbnail (1024xAUTO);
 
-$media->getId(); // 1
-$media->getPath(); // /images/2018/12/sl290s8xq0is9wqjk.jpg
-$thumbnails = $media->getThumbnails();
+$media->id;   // 1
+$media->path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
+$media->url;  // http://localhost:8000/images/2019/06/5cf6976f20dfb.jpg
+$thumbs = $media->thumbs();
 
-$thumbnails['150x150']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-150x150.jpg
-$thumbnails['medium']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-150x150.jpg
-$thumbnails['large']->getPath(); // /images/2018/12/sl290s8xq0is9wqjk-1024.jpg
+$thumbs['small']->path;  // /images/2018/12/5cf6976f20dfb-150x150.jpg
+$thumbs['medium']->path; // /images/2018/12/5cf6976f20dfb-150x150.jpg
+$thumbs['large']->path;  // /images/2018/12/5cf6976f20dfb-1024x300.jpg
 ```
 
 ## Change log
@@ -67,7 +62,7 @@ If you discover any security related issues, please email eleandro@inbox.ru inst
 
 ## License
 
-No license. Please see the [license file](license.md) for more information.
+MIT. Please see the [license file](license.md) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/e200/mediavel.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/e200/mediavel.svg?style=flat-square
@@ -79,4 +74,4 @@ No license. Please see the [license file](license.md) for more information.
 [link-travis]: https://travis-ci.org/e200/mediavel
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/e200
-[link-contributors]: ../../contributors]
+[link-contributors]: ../../contributors
