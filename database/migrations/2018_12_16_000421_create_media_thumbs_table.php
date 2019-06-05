@@ -21,7 +21,12 @@ class CreateMediaThumbsTable extends Migration
             $table->json('meta')->nullable();
             $table->string('mime_type')->nullable();
 
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('media_id')->nullable();
+            $table
+                ->foreign('media_id')
+                ->references('id')
+                ->on('media')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
