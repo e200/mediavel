@@ -14,7 +14,7 @@ class CreateMediaCollectionsTable extends Migration
     public function up()
     {
         Schema::create('media_collections', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->timestamps();
         });

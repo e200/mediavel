@@ -16,13 +16,13 @@ class CreateMediaThumbsTable extends Migration
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('relative_path');
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('size_name')->nullable();
 
-            $table->unsignedInteger('media_id')->nullable();
+            $table->unsignedBigInteger('media_id')->nullable();
             $table
                 ->foreign('media_id')
                 ->references('id')
