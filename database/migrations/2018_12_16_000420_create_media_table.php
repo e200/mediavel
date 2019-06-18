@@ -20,7 +20,7 @@ class CreateMediaTable extends Migration
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('mime_type')->nullable();
-            $table->boolean('preserve_original')->default(true);
+            $table->boolean('preserve_original')->default(false);
 
             $table->unsignedInteger('mediable_id')->nullable();
             $table->string('mediable_type')->nullable();
