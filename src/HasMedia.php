@@ -20,6 +20,7 @@ trait HasMedia
     public function resize($sizeName, array $dimensions, $disk = null)
     {
         $mediaRelativePath = $this['relative_path'];
+        $preserveOriginal = $this['preserve_original'];
 
         $resizeWidth = $dimensions[0];
         $resizeHeight = $dimensions[1];
@@ -41,7 +42,7 @@ trait HasMedia
             'size_name' => $sizeName,
         ];
 
-        if ($this['preserve_original']) {
+        if ($preserveOriginal) {
             $thumbRelativePath = $this->getThumbFile(
                 $mediaRelativePath,
                 $imageWidth,
