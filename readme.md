@@ -27,7 +27,7 @@ $media = $mediaLibrary
   ->preserveOriginal()           // Do not touch the original file
   ->resize('small', [75, 75])    // Creates a thumbnail (75x75) derived from the original image
   ->resize('medium', [150, 150]) // Creates a thumbnail (150x150)
-  ->resize('large', [1024, 300]) // Creates a thumbnail (1024xAUTO);
+  ->resize('large', [1024, 300]) // Creates a thumbnail (1024x300);
 
 $media->id;            // 1
 $media->relative_path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
