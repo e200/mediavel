@@ -20,24 +20,35 @@ $ composer require e200/mediavel
 ## Usage
 
 ```php
-$mediaLibrary = new MediaLibrary();
+namespace App\Http\Controllers;
 
-$media = $mediaLibrary
-  ->add($request->image)         // Store the image
-  ->preserveOriginal()           // Do not touch the original file
-  ->resize('small', [75, 75])    // Creates a thumbnail (75x75) derived from the original image
-  ->resize('medium', [150, 150]) // Creates a thumbnail (150x150)
-  ->resize('large', [1024, 300]) // Creates a thumbnail (1024x300);
+use Illuminate\Routing\Controller;
+use e200\Mediavel\Facades\MediaLibrary;
 
-$media->id;            // 1
-$media->relative_path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
-$media->url;           // http://localhost:8000/images/2019/06/5cf6976f20dfb.jpg
+class ImageController extends Controller
+{
+    public function upload(Request $request)
+    {
+        $uploadedImage = $request->image;
 
-$thumbs = $media->thumbs();
+        $media = $mediaLibrary
+          ->add($uploadedImage)           // Store the image
+          ->preserveOriginal()            // Do not touch the original file
+          ->resize('small', [75, 75])     // Creates a thumbnail (75x75) derived from the original image
+          ->resize('medium', [150, 150])  // Creates a thumbnail (150x150)
+          ->resize('large', [1024, 300]); // Creates a thumbnail (1024x300);
 
-$thumbs['small']->path;  // /images/2018/12/5cf6976f20dfb-75x75.jpg
-$thumbs['medium']->path; // /images/2018/12/5cf6976f20dfb-150x150.jpg
-$thumbs['large']->path;  // /images/2018/12/5cf6976f20dfb-1024x300.jpg
+        $media->id;            // 1
+        $media->relative_path; // /images/2018/12/sl290s8xq0is9wqjk.jpg
+        $media->url;           // http://localhost:8000/images/2019/06/5cf6976f20dfb.jpg
+
+        $thumbs = $media->thumbs();
+
+        $thumbs['small']->path;  // /images/2018/12/5cf6976f20dfb-75x75.jpg
+        $thumbs['medium']->path; // /images/2018/12/5cf6976f20dfb-150x150.jpg
+        $thumbs['large']->path;  // /images/2018/12/5cf6976f20dfb-1024x300.jpg
+    }
+}
 ```
 
 ## Change log
